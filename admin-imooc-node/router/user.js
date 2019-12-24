@@ -1,6 +1,6 @@
 const express = require('express')
 const { SuccessModel, ErrorModel } = require('../model/Result')
-const { login } = require('../services/user')
+const { login, queryUserInfo } = require('../services/user')
 const {
   debug,
   PWD_SALT,
@@ -49,7 +49,14 @@ router.post(
   }
 )
 router.get('/info', (req, res, next) => {
-  res.json('user info...')
+  queryUserInfo('admin').then(userData => {
+    console.log(userData)
+    if (userData) {
+      res.json(new SuccessModel(userData, '查询成功'))
+    } else {
+      res.json(ErrorModel.Error('此用户不存在'))
+    }
+  })
 })
 
 module.exports = router

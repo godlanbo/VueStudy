@@ -13,7 +13,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     if (store.getters.token) {
-      config.headers['X-Token'] = getToken()
+      config.headers['Authorization'] = `Bearer ${getToken()}`
     }
     return config
   },
@@ -54,8 +54,14 @@ service.interceptors.response.use(
     }
   },
   error => {
+    console.log({ error })
+    let message = error.message || '请求失败'
+    if (error.response && error.response.data) {
+      const { data } = error.response
+      message = data.message
+    }
     Message({
-      message: error.message,
+      message,
       type: 'error',
       duration: 5 * 1000
     })

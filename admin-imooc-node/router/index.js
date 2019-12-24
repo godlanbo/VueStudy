@@ -2,14 +2,10 @@ const express = require('express')
 const boom = require('boom')
 const { ErrorModel } = require('../model/Result')
 const userRouter = require('./user')
-const {
-  CODE_ERROR,
-  CODE_NO_TOKEN
-} = require('../utils/constant')
-const jwtAuth = require('./jwt')
+const jwtAuth = require('../utils/jwt')
 const router = express.Router()
-router.use(jwtAuth)
 
+router.use(jwtAuth)
 router.get('/', (req, res, next) => {
   res.json({
     data: {
@@ -46,7 +42,7 @@ router.use((err, req, res, next) => {
 // 处理token错误
 router.use((err, req, res, next) => {
   const statusCode = err.status || 500
-  const errorMsg = err.message || 'token验证未通过'
+  const errorMsg = 'token验证未通过'
   res.status(statusCode).json(ErrorModel.NoToken(errorMsg))
 })
 module.exports = router

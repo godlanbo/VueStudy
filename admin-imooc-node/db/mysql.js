@@ -30,7 +30,22 @@ function querySql(sql) {
   })
   return promise
 }
+
+function queryOne(sql) {
+  return new Promise((resolve, reject) => {
+    querySql(sql).then(result => {
+      if (result && result.length > 0) {
+        resolve(result[0])
+      } else {
+        resolve(null)
+      }
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
 module.exports = {
   querySql,
+  queryOne,
   escape: mysql.escape
 }

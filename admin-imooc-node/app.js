@@ -2,7 +2,6 @@ const express = require('express')
 const router = require('./router')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const jwtAuth = require('./router/jwt')
 // const boom = require('express-boom')
 // 创建 express 应用
 const app = express()

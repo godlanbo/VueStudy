@@ -1,5 +1,5 @@
 const expressJwt = require('express-jwt')
-const { PRIVATE_KEY } = require('../utils/constant')
+const { PRIVATE_KEY } = require('./constant')
 
 const jwtAuth = expressJwt({
   secret: PRIVATE_KEY,
