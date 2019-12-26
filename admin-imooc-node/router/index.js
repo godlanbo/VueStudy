@@ -2,20 +2,14 @@ const express = require('express')
 const boom = require('boom')
 const { ErrorModel } = require('../model/Result')
 const userRouter = require('./user')
+const bookRouter = require('./book')
 const { jwtAuth } = require('../utils/jwt')
 const router = express.Router()
 
 router.use(jwtAuth)
-router.get('/', (req, res, next) => {
-  res.json({
-    data: {
-      code: 20000,
-      msg: 'hello'
-    }
-  })
-})
 
 router.use('/user', userRouter)
+router.use('/book', bookRouter)
 /**
  * 集中处理404请求的中间件
  * 注意：该中间件必须放在正常处理流程之后
@@ -42,7 +36,7 @@ router.use((err, req, res, next) => {
 // 处理token错误
 router.use((err, req, res, next) => {
   const statusCode = err.status || 500
-  const errorMsg = 'token验证未通过'
+  const errorMsg = err.message || 'token验证未通过'
   res.status(statusCode).json(ErrorModel.NoToken(errorMsg))
 })
 module.exports = router
