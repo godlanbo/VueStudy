@@ -23,24 +23,6 @@ class SuccessModel {
 }
 
 class ErrorModel {
-  // constructor (code, message, statusCode, options) {
-  //   if (typeof code === 'string') {
-  //     this.code = CODE_ERROR
-  //     this.message = code
-  //   }
-  //   if (code) {
-  //     this.code = code
-  //   }
-  //   if (message) {
-  //     this.message = message
-  //   }
-  //   if (statusCode) {
-  //     this.statusCode = statusCode
-  //   }
-  //   if (options) {
-  //     this.options = options
-  //   }
-  // }
   Error (message) {
     return {
       code: CODE_ERROR,

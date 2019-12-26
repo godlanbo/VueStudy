@@ -11,4 +11,12 @@ const jwtAuth = expressJwt({
   ]
 })
 
-module.exports = jwtAuth
+function decode(req) {
+  let token = req.user
+  console.log(token)
+}
+
+module.exports = {
+  jwtAuth,
+  decode
+}

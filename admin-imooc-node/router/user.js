@@ -49,14 +49,19 @@ router.post(
   }
 )
 router.get('/info', (req, res, next) => {
-  queryUserInfo('admin').then(userData => {
-    console.log(userData)
-    if (userData) {
-      res.json(new SuccessModel(userData, '查询成功'))
-    } else {
-      res.json(ErrorModel.Error('此用户不存在'))
-    }
-  })
+  const username = req.user.username
+  if (username) {
+    queryUserInfo(username).then(userData => {
+      if (userData) {
+        userData.roles = [userData.role]
+        res.json(new SuccessModel(userData, '查询成功'))
+      } else {
+        res.json(ErrorModel.Error('此用户不存在'))
+      }
+    })
+  } else {
+    res.json(ErrorModel.NoToken('token解析失败'))
+  }
 })
 
 module.exports = router

@@ -2,7 +2,7 @@ const express = require('express')
 const boom = require('boom')
 const { ErrorModel } = require('../model/Result')
 const userRouter = require('./user')
-const jwtAuth = require('../utils/jwt')
+const { jwtAuth } = require('../utils/jwt')
 const router = express.Router()
 
 router.use(jwtAuth)

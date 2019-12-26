@@ -9,7 +9,7 @@ function login(username, password) {
 }
 function queryUserInfo(username) {
   username = escape(username)
-  return queryOne(`select * from admin_user where username=${username}`)
+  return queryOne(`select id, username, nickname, role, avatar from admin_user where username=${username}`)
 }
 module.exports = {
   login,
