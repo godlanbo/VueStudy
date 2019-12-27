@@ -29,8 +29,8 @@ router.use((err, req, res, next) => {
   if (!err.isBoom) {
     return next(err)
   }
+  const errorMsg = err.message || (err.output && err.output.payload && err.output.payload.message)
   const statusCode = (err.output && err.output.statusCode) || 500
-  const errorMsg = (err.output && err.output.payload && err.output.payload.message) || err.message
   res.status(statusCode).json(ErrorModel.Error(errorMsg))
 })
 // 处理token错误

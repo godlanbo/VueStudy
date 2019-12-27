@@ -39,6 +39,15 @@ class ErrorModel {
   }
 }
 
+
+// fun1(x).then(async result => {
+//   if (result > 0) {
+//     const result = await fun2(2)
+//   } else {
+//     const result = await fun3(2)
+//   }
+// })
+
 module.exports = {
   SuccessModel,
   ErrorModel: new ErrorModel()

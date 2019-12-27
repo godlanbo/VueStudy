@@ -89,7 +89,7 @@ export default {
         })
         this.$emit('onSuccess', file)
       } else {
-        this.message({
+        this.$message({
           message: message || '上传失败',
           type: 'error'
         })

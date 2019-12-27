@@ -3,6 +3,7 @@ const multer = require('multer')
 const { UPLOAD_PATH } = require('../utils/constant')
 const { SuccessModel, ErrorModel } = require('../model/Result')
 const Book = require('../model/Book')
+const boom = require('boom')
 const router = express.Router()
 
 router.post(
@@ -13,8 +14,11 @@ router.post(
       res.json(ErrorModel.Error('上传电子书失败'))
     } else {
       const book = new Book(req.file)
-      console.log(book)
-      res.json(new SuccessModel('上传电子书成功'))
+      book.parse().then(book => {
+        res.json(new SuccessModel('上传电子书成功'))
+      }).catch(err => {
+        next(boom.badImplementation(err))
+      })
     }
   }
 )
