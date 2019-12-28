@@ -43,6 +43,7 @@ class Book {
     this.author = '' // 作者
     this.publisher = '' // 出版社
     this.contents = [] // 目录
+    this.contentsTree = [] // 树状目录
     this.coverUrl = '' // 封面图片URL
     this.coverPath = ''
     this.category = -1 // 分类ID
@@ -100,8 +101,11 @@ class Book {
             }
             try {
               this.unzip()
-              this.parseContents(epub)
-              epub.getImage(cover, handleImage)
+              this.parseContents(epub).then(({ chapters, chapterTree }) => {
+                this.contents = chapters
+                this.contentsTree = chapterTree
+                epub.getImage(cover, handleImage)
+              })
             } catch(err) {
               reject(err)
             }
@@ -128,18 +132,30 @@ class Book {
         return manifest[id].href
       }
     }
-    const findParent = (array) => {
+    const findParent = (array, level = 0, pid = '') => {
       return array.map(item => {
+        item.level = level
+        item.pid = pid
+        if (item.navPoint && item.navPoint.length > 0) {
+          item.navPoint = findParent(item.navPoint, level + 1, item['$'].id)
+        } else if (item.navPoint) {
+          item.navPoint.level = level + 1
+          item.navPoint.pid = item['$'].id
+        }
         return item
       })
     }
     const flatten = (array) => {
       return [].concat(...array.map(item => {
+        if (item.navPoint && item.navPoint.length > 0) {
+          return [].concat(item, ...flatten(item.navPoint))
+        } else if (item.navPoint) {
+          return [].concat(item, item.navPoint)
+        }
         return item
       }))
     }
     const ncxFilePath = Book.genPath(`${this.unzipPath}/${getNcxFilePath()}`)
-    // console.log(ncxFilePath)
     if (fs.existsSync(ncxFilePath)) {
       return new Promise((resolve, reject) => {
         const xml = fs.readFileSync(ncxFilePath, 'utf-8')
@@ -166,11 +182,24 @@ class Book {
                 } else {
                   chapter.label = ''
                 }
+                chapter.level = nav.level
+                chapter.pid = nav.pid
                 chapter.navId = nav['$'].id
                 chapter.fileName = this.fileName
                 chapter.order = index + 1
                 chapters.push(chapter)
               })
+              const chapterTree = []
+              chapters.forEach(val => {
+                val.children = []
+                if (val.pid === '') {
+                  chapterTree.push(val)
+                } else {
+                  const parent = chapters.find(temp => temp.navId === val.pid)
+                  parent.children.push(val)
+                }
+              })
+              resolve({ chapters, chapterTree })
             } else {
               reject(new Error('目录解析失败'))
             }

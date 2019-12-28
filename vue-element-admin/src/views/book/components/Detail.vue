@@ -72,15 +72,15 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="文件名称：" :label-width="labelWidth">
-                <el-input v-model="postForm.fileName" placeholder="文件名称" disabled />
+                <el-input v-model="postForm.originalName" placeholder="文件名称" disabled />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="24">
               <el-form-item label="封面：" :label-width="labelWidth">
-                <a v-if="postForm.cover" :href="postForm.cover" target="_blank">
-                  <img src="postForm.cover" class="preview-img">
+                <a v-if="postForm.coverUrl" :href="postForm.coverUrl" target="_blank">
+                  <img src="postForm.coverUrl" class="preview-img">
                 </a>
                 <span v-else>无</span>
               </el-form-item>
@@ -90,7 +90,7 @@
             <el-col :span="24">
               <el-form-item label="目录：" :label-width="labelWidth">
                 <div v-if="postForm.contents && postForm.contents.length > 0" class="contents-wapper">
-                  <el-tree />
+                  <el-tree :data="contentsTree" @node-click="onContentClick" />
                 </div>
                 <span v-else>无</span>
               </el-form-item>
@@ -120,15 +120,58 @@ export default {
         status: 'draft'
       },
       fileList: [],
-      labelWidth: '120px'
+      labelWidth: '120px',
+      contentsTree: []
     }
   },
   methods: {
+    onContentClick(data) {
+      if (data.text) {
+        window.open(data.text)
+      }
+    },
+    setData(data) {
+      const {
+        title,
+        author,
+        publisher,
+        language,
+        rootFile,
+        coverUrl,
+        url,
+        originalName,
+        contents,
+        fileName,
+        coverPath,
+        filePath,
+        unzipPath,
+        contentsTree
+      } = data
+      this.postForm = {
+        ...this.postForm,
+        title,
+        author,
+        publisher,
+        language,
+        rootFile,
+        coverUrl,
+        url,
+        originalName,
+        contents,
+        fileName,
+        coverPath,
+        filePath,
+        unzipPath,
+        contentsTree
+      }
+      this.contentsTree = contentsTree
+    },
     onUploadRemove() {
       console.log('onUploadRemove')
     },
-    onUploadSuccess() {
-      console.log('onUploadSuccess')
+    onUploadSuccess(data) {
+      console.log('onUploadSuccess', data)
+      this.setData(data)
     },
     showGuide() {
       console.log('showGuide')

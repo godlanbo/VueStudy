@@ -15,7 +15,7 @@ router.post(
     } else {
       const book = new Book(req.file)
       book.parse().then(book => {
-        res.json(new SuccessModel('上传电子书成功'))
+        res.json(new SuccessModel(book, '上传电子书成功'))
       }).catch(err => {
         next(boom.badImplementation(err))
       })

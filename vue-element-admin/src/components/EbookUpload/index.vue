@@ -81,13 +81,13 @@ export default {
       })
     },
     onSuccess(response, file) {
-      const { code, message } = response
+      const { code, message, data } = response
       if (code === 0) {
         this.$message({
           message: message,
           type: 'success'
         })
-        this.$emit('onSuccess', file)
+        this.$emit('onSuccess', data)
       } else {
         this.$message({
           message: message || '上传失败',
