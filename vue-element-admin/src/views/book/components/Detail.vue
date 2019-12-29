@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="postForm" :model="postForm">
+  <el-form ref="postForm" :model="postForm" :rules="rules">
     <sticky :class-name="'sub-navbar'">
       <el-button v-if="!isEdit" @click="showGuide">显示帮助</el-button>
       <el-button
@@ -30,19 +30,19 @@
           </el-form-item>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="作者：" :label-width="labelWidth">
+              <el-form-item prop="author" label="作者：" :label-width="labelWidth">
                 <el-input v-model="postForm.author" placeholder="作者" />
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="出版社：" :label-width="labelWidth">
+              <el-form-item prop="publisher" label="出版社：" :label-width="labelWidth">
                 <el-input v-model="postForm.publisher" placeholder="出版社" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="语言：" :label-width="labelWidth">
+              <el-form-item prop="language" label="语言：" :label-width="labelWidth">
                 <el-input v-model="postForm.language" placeholder="语言" />
               </el-form-item>
             </el-col>
@@ -106,6 +106,29 @@ import Sticky from '@/components/Sticky/index'
 import Warning from './Warning'
 import EbookUpload from '@/components/EbookUpload/index'
 import MdInput from '@/components/MDinput/index'
+import createBook from '@/api/book'
+
+const defaultForm = {
+  title: '',
+  author: '',
+  publisher: '',
+  language: '',
+  rootFile: '',
+  coverUrl: '',
+  url: '',
+  originalName: '',
+  fileName: '',
+  coverPath: '',
+  filePath: '',
+  unzipPath: '',
+  contentsTree: ''
+}
+const fields = {
+  'title': '书名',
+  'author': '作者',
+  'publisher': '出版社',
+  'language': '语言'
+}
 export default {
   components: {
     Sticky, Warning, EbookUpload, MdInput
@@ -114,6 +137,13 @@ export default {
     isEdit: Boolean
   },
   data() {
+    const validateRequire = (rule, value, callback) => {
+      if (value.length === 0) {
+        callback(new Error(fields[rule.field] + '不能为空'))
+      } else {
+        callback()
+      }
+    }
     return {
       loading: false,
       postForm: {
@@ -121,7 +151,13 @@ export default {
       },
       fileList: [],
       labelWidth: '120px',
-      contentsTree: []
+      contentsTree: [],
+      rules: {
+        title: [{ validator: validateRequire }],
+        author: [{ validator: validateRequire }],
+        publisher: [{ validator: validateRequire }],
+        language: [{ validator: validateRequire }]
+      }
     }
   },
   methods: {
@@ -166,8 +202,12 @@ export default {
       }
       this.contentsTree = contentsTree
     },
+    setDefault() {
+      this.postForm = Object.assign({}, defaultForm)
+      this.contentsTree = []
+    },
     onUploadRemove() {
-      console.log('onUploadRemove')
+      this.setDefault()
     },
     onUploadSuccess(data) {
       console.log('onUploadSuccess', data)
@@ -177,10 +217,29 @@ export default {
       console.log('showGuide')
     },
     submitForm() {
-      this.loading = true
-      setTimeout(() => {
+      if (!this.loading) {
+        this.$refs.postForm.validate((valid, fields) => {
+          if (valid) {
+            const book = Object.assign({}, this.postForm)
+            delete book.contentsTree
+            delete book.contents
+            if (!this.isEdit) {
+              createBook(book)
+            } else {
+              // updateBook(book)
+            }
+          } else {
+            this.loading = true
+            const message = fields[Object.keys(fields)[0]][0].message
+            this.$message({
+              type: 'error',
+              message
+            })
+            return false
+          }
+        })
         this.loading = false
-      }, 1000)
+      }
     }
   }
 }

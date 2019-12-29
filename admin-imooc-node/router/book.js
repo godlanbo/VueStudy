@@ -23,4 +23,15 @@ router.post(
   }
 )
 
+router.post(
+  '/create',
+  (req, res, next) => {
+    const username = req.user.username
+    if (username) {
+      req.body.username = username
+    }
+    const book = new Book(null, req.body)
+  }
+)
+
 module.exports = router
