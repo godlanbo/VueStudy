@@ -8,7 +8,7 @@ if (env === 'dev') {
     user: 'root',
     password: 'jyl62166123',
     port: '3306',
-    database: 'myblog',
+    database: 'book',
     // 是否允许一个query中有多条MySQL语句
     multipleStatements: true
   }
@@ -20,7 +20,7 @@ if (env === 'production') {
     user: 'root',
     password: 'jyl62166123',
     port: '3306',
-    database: 'myblog',
+    database: 'book',
     // 是否允许一个query中有多条MySQL语句
     multipleStatements: true
   }

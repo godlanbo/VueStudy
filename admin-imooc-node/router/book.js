@@ -4,6 +4,7 @@ const { UPLOAD_PATH } = require('../utils/constant')
 const { SuccessModel, ErrorModel } = require('../model/Result')
 const Book = require('../model/Book')
 const boom = require('boom')
+const bookService = require('../services/book')
 const router = express.Router()
 
 router.post(
@@ -31,6 +32,11 @@ router.post(
       req.body.username = username
     }
     const book = new Book(null, req.body)
+    bookService.insertBook(book).then(() => {
+      res.json(new SuccessModel('添加电子书成功'))
+    }).catch(err => {
+      next(boom.badImplementation(err))
+    })
   }
 )
 
