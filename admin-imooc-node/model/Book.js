@@ -250,7 +250,6 @@ class Book {
     return this.contents
   }
   reset() {
-    console.log(this.fileName)
     if (Book.pathExists(this.filePath)) {
       fs.unlinkSync(Book.genPath(this.filePath))
     }
@@ -260,6 +259,12 @@ class Book {
     if (Book.pathExists(this.unzipPath)) {
       fs.rmdirSync(Book.genPath(this.unzipPath), { recursive: true })
     }
+  }
+  static genCoverUrl(book) {
+    if (book.cover.startsWith('/')) {
+      return `${UPLOAD_URL}${book.cover}`
+    }
+    return `${UPLOAD_URL}/${book.cover}`
   }
   static genPath(path) {
     if (path.startsWith('/')) {

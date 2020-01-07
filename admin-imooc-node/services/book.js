@@ -66,6 +66,25 @@ function insertBook(book) {
   })
 }
 
+function getBook(fileName) {
+  return new Promise(async (resolve, reject) => {
+    const bookSql = `select * from book where fileName='${fileName}';`
+    const contentsSql = `select * from contents where fileName='${fileName}' order by \`order\``
+    try {
+      const bookData = await queryOne(bookSql)
+      const bookContents = await querySql(contentsSql)
+      if (!bookData || bookData.length === 0) {
+        reject(new Error('没有这本图书'))
+      }
+      bookData.cover = Book.genCoverUrl(bookData)
+      resolve(bookData)
+    } catch(err) {
+      reject(err)
+    }
+  })
+}
+
 module.exports = {
-  insertBook
+  insertBook,
+  getBook
 }

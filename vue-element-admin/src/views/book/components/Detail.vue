@@ -106,7 +106,7 @@ import Sticky from '@/components/Sticky/index'
 import Warning from './Warning'
 import EbookUpload from '@/components/EbookUpload/index'
 import MdInput from '@/components/MDinput/index'
-import { createBook } from '@/api/book'
+import { createBook, getBook } from '@/api/book'
 
 const fields = {
   'title': '书名',
@@ -145,7 +145,20 @@ export default {
       }
     }
   },
+  created() {
+    if (this.isEdit) {
+      const fileName = this.$route.params.fileName
+      this.getBookData(fileName)
+    }
+  },
   methods: {
+    getBookData(fileName) {
+      getBook(fileName).then(response => {
+        response.data.coverUrl = response.data.cover
+        delete response.data.cover
+        this.setData(response.data)
+      })
+    },
     onContentClick(data) {
       if (data.text) {
         window.open(data.text)
@@ -188,7 +201,6 @@ export default {
       this.contentsTree = contentsTree
     },
     setDefault() {
-      // this.postForm = Object.assign({}, defaultForm)
       this.$refs.postForm.resetFields()
       this.contentsTree = []
       this.fileList = []
