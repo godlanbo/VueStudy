@@ -1,49 +1,47 @@
 <template>
   <div id="app">
-    <el-form inline :model="data" :rules="rules" status-icon hide-required-asterisk>
-      <el-form-item label="审批人" prop="user">
-        <el-input v-model="data.user" placeholder="审批人"></el-input>
-      </el-form-item>
-      <el-form-item label="活动区域">
-        <el-select v-model="data.region" placeholder="活动区域">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">查询</el-button>
-      </el-form-item>
-    </el-form>
+    <home-header></home-header>
+    <div class="temp"></div>
+    <home-swiper></home-swiper>
   </div>
 </template>
 <script>
+import HomeSwiper from '@/views/swiper/Swiper'
+import HomeHeader from '@/views/Head/HeadBar'
 export default {
   name: "app",
-  data() {
-    const userValidator = (rule, value, callback) => {
-      if (value.length > 3) {
-        callback()
-      } else {
-        callback(new Error("用户名长度必须大于3"))
-      }
-    }
-    return {
-      data: {
-        user: "sam",
-        region: "区域二"
-      },
-      rules: {
-        user: [
-          { required: true, trigger: "blur", message: "error" },
-          { validator: userValidator, trigger: "blur" }
-        ]
-      }
-    };
+  components: {
+    HomeSwiper,
+    HomeHeader
   },
-  methods: {
-    onSubmit() {
-      console.log(this.data);
+  data() {
+    return {
+      
     }
+  },
+  mounted() {
+    const loading = document.querySelector('.loading-wrapper')
+    setTimeout(() => {
+      loading.style.display = 'none'
+    }, 1100)
+    loading.style.opacity = 0
+    document.querySelector('#app').className = 'active'
   }
-};
+}
 </script>
+<style>
+html, body, h1, h2, h3, h4, h5, h6, p, blockquote, button, dd, div, dl, dt, form, li, ol, p, pre, td, th, ul {
+  margin: 0px;
+  padding: 0px;
+}
+#app {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+#app.active {
+  opacity: 1;
+}
+.temp {
+  height: 100px;
+}
+</style>

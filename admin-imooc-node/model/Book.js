@@ -260,6 +260,22 @@ class Book {
       fs.rmdirSync(Book.genPath(this.unzipPath), { recursive: true })
     }
   }
+  static genContentsTree(book) {
+    if (book.contents) {
+      const { contents } = book
+      const contentsTree = []
+      contents.forEach(val => {
+        val.children = []
+        if (val.pid === '') {
+          chapterTree.push(val)
+        } else {
+          const parent = contents.find(temp => temp.navId === val.pid)
+          parent.children.push(val)
+        }
+      })
+      return contentsTree
+    }
+  }
   static genCoverUrl(book) {
     if (book.cover.startsWith('/')) {
       return `${UPLOAD_URL}${book.cover}`

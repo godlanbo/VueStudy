@@ -1,17 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>element-ui-test</title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but element-ui-test doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <style>
+    @import url("https://fonts.googleapis.com/css?family=Baloo+Bhaijaan&display=swap");
+    body {
+      padding: 0px;
+      margin: 0px;
+    }
+    .loading-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      height: 100vh;
+      opacity: 1;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: #2980b9;
+      transition: 1.5s ease;
+    }
+    .loading {
+      display: flex;
+      color: white;
+      font-size: 5em;
+      font-family: "Baloo Bhaijaan", cursive;
+      text-transform: uppercase;
+    }
+
+    .loading span {
+      text-shadow: 0 1px #bbb, 0 2px #bbb, 0 3px #bbb, 0 4px #bbb, 0 5px #bbb, 0 6px transparent, 0 7px transparent, 0 8px transparent, 0 9px transparent, 0 10px 10px rgba(0, 0, 0, 0.4);
+      transform: translateY(20px);
+      animation: bounce 0.3s ease infinite alternate;
+    }
+
+    @keyframes bounce {
+      to {
+        text-shadow: 0 1px #bbb, 0 2px #bbb, 0 3px #bbb, 0 4px #bbb, 0 5px #bbb, 0 6px #bbb, 0 7px #bbb, 0 8px #bbb, 0 9px #bbb, 0 50px 25px rgba(0, 0, 0, 0.2);
+        transform: translateY(-20px);
+      }
+    }
+  </style>
+  <title>element-ui-test</title>
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but element-ui-test doesn't work properly without JavaScript enabled. Please enable it to
+      continue.</strong>
+  </noscript>
+  <div id="app"></div>
+  <div class="loading-wrapper">
+    <div class="loading">Loading...</div>
+  </div>
+  <!-- built files will be auto injected -->
+</body>
+<script>
+  let loading = document.querySelector('.loading')
+  let letters = loading.textContent.split('')
+  loading.textContent = ''
+  letters.forEach((letter, i) => {
+    let span = document.createElement('span')
+    span.textContent = letter
+    let str = i / 10 + 's'
+    span.textContent = letter
+    span.style.animationDelay = str
+    loading.append(span)
+  })
+</script>
+
 </html>
