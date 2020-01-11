@@ -1,5 +1,5 @@
 const Book = require('../model/Book')
-const { insert, queryOne, querySql } = require('../db/mysql')
+const { insert, queryOne, querySql, update } = require('../db/mysql')
 const _ = require('lodash')
 
 function exists(book) {
@@ -33,6 +33,7 @@ async function insertContents(book) {
         'fileName',
         'id',
         'href',
+        'text',
         'order',
         'level',
         'label',
@@ -66,6 +67,25 @@ function insertBook(book) {
   })
 }
 
+function updateBook(book) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (book instanceof Book) {
+        const result = await getBook(book.fileName)
+        if (result) {
+          const model = book.toDb()
+          await update(model, 'book', `where fileName='${book.fileName}'`)
+          resolve()
+        }
+      } else {
+        reject(new Error('错误的处理对象'))
+      }
+    } catch(err) {
+      reject(err)
+    }
+  })
+}
+
 function getBook(fileName) {
   return new Promise(async (resolve, reject) => {
     const bookSql = `select * from book where fileName='${fileName}';`
@@ -74,9 +94,10 @@ function getBook(fileName) {
       const bookData = await queryOne(bookSql)
       const bookContents = await querySql(contentsSql)
       if (!bookData || bookData.length === 0) {
-        reject(new Error('没有这本图书'))
+        reject(new Error('电子书不存在'))
       }
       bookData.cover = Book.genCoverUrl(bookData)
+      bookData.contentsTree = Book.genContentsTree(bookContents)
       resolve(bookData)
     } catch(err) {
       reject(err)
@@ -86,5 +107,6 @@ function getBook(fileName) {
 
 module.exports = {
   insertBook,
-  getBook
+  getBook,
+  updateBook
 }

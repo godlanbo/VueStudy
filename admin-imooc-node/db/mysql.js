@@ -70,9 +70,30 @@ function insert(model, tableName) {
     }
   })
 }
+function update(model, tableName, where) {
+  return new Promise(async (resolve, reject) => {
+    const entry = []
+    Object.keys(model).forEach(key => {
+      if (model.hasOwnProperty(key)) {
+        entry.push(`\`${key}\`='${model[key]}'`)
+      }
+    })
+    if (entry.length > 0) {
+      let sql = `UPDATE \`${tableName}\` SET`
+      sql = `${sql} ${entry.join(',')} ${where};`
+      try {
+        await querySql(sql)
+        resolve()
+      } catch(err) {
+        reject(err)
+      }
+    }
+  })
+}
 module.exports = {
   querySql,
   queryOne,
   insert,
+  update,
   escape: mysql.escape
 }

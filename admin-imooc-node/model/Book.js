@@ -260,14 +260,13 @@ class Book {
       fs.rmdirSync(Book.genPath(this.unzipPath), { recursive: true })
     }
   }
-  static genContentsTree(book) {
-    if (book.contents) {
-      const { contents } = book
+  static genContentsTree(contents) {
+    if (contents) {
       const contentsTree = []
       contents.forEach(val => {
         val.children = []
         if (val.pid === '') {
-          chapterTree.push(val)
+          contentsTree.push(val)
         } else {
           const parent = contents.find(temp => temp.navId === val.pid)
           parent.children.push(val)

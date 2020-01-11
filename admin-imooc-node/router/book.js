@@ -24,21 +24,18 @@ router.post(
   }
 )
 
-router.post(
-  '/create',
-  (req, res, next) => {
-    const username = req.user.username
-    if (username) {
-      req.body.username = username
-    }
-    const book = new Book(null, req.body)
-    bookService.insertBook(book).then(() => {
-      res.json(new SuccessModel('添加电子书成功'))
-    }).catch(err => {
-      next(boom.badImplementation(err))
-    })
+router.post('/create', (req, res, next) => {
+  const username = req.user.username
+  if (username) {
+    req.body.username = username
   }
-)
+  const book = new Book(null, req.body)
+  bookService.insertBook(book).then(() => {
+    res.json(new SuccessModel('添加电子书成功'))
+  }).catch(err => {
+    next(boom.badImplementation(err))
+  })
+})
 
 router.get('/get', (req, res, next) => {
   const { fileName } = req.query
@@ -52,4 +49,18 @@ router.get('/get', (req, res, next) => {
     })
   }
 })
+
+router.post('/update', (req, res, next) => {
+  const username = req.user.username
+  if (username) {
+    req.body.username = username
+  }
+  const book = new Book(null, req.body)
+  bookService.updateBook(book).then(() => {
+    res.json(new SuccessModel('更新电子书成功'))
+  }).catch(err => {
+    next(boom.badImplementation(err))
+  })
+})
+
 module.exports = router
