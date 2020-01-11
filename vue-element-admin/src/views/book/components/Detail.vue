@@ -89,7 +89,7 @@
           <el-row>
             <el-col :span="24">
               <el-form-item prop="contents" label="目录：" :label-width="labelWidth">
-                <div v-if="postForm.contents && postForm.contents.length > 0" class="contents-wapper">
+                <div v-if="contentsTree && contentsTree.length > 0" class="contents-wapper">
                   <el-tree :data="contentsTree" @node-click="onContentClick" />
                 </div>
                 <span v-else>无</span>
@@ -106,7 +106,7 @@ import Sticky from '@/components/Sticky/index'
 import Warning from './Warning'
 import EbookUpload from '@/components/EbookUpload/index'
 import MdInput from '@/components/MDinput/index'
-import { createBook, getBook } from '@/api/book'
+import { createBook, getBook, updateBook } from '@/api/book'
 
 const fields = {
   'title': '书名',
@@ -199,6 +199,7 @@ export default {
         contentsTree
       }
       this.contentsTree = contentsTree
+      // this.fileList = [{ name: originalName, url }]
     },
     setDefault() {
       this.$refs.postForm.resetFields()
@@ -238,7 +239,18 @@ export default {
                 this.loading = false
               })
             } else {
-              // updateBook(book)
+              updateBook(book).then(response => {
+                const { message } = response
+                this.$notify({
+                  title: '更新成功',
+                  message,
+                  type: 'success',
+                  duration: 2000
+                })
+                this.loading = false
+              }).catch(() => {
+                this.loading = false
+              })
             }
           } else {
             this.loading = false

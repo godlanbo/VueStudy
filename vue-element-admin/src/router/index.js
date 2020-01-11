@@ -66,7 +66,7 @@ export const constantRoutes = [
       {
         name: 'bookList',
         path: '/book/list',
-        component: () => import('@/views/book/create'),
+        component: () => import('@/views/book/List'),
         meta: { title: '图书列表', icon: 'list', roles: ['admin'] }
       },
       {

@@ -17,3 +17,18 @@ export function getBook(fileName) {
     }
   })
 }
+
+export function updateBook(book) {
+  return request({
+    url: '/book/update',
+    method: 'post',
+    data: book
+  })
+}
+
+export function getCategory() {
+  return request({
+    url: '/book/category',
+    method: 'get'
+  })
+}
