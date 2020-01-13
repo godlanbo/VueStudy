@@ -6,6 +6,35 @@
           <p v-html="rotatingText"></p>
         </div>
       </div>
+      <div class="detail-content">
+        <p>
+          <span style="color: #322e23">C</span>
+          <span style="color: #9cb198">F</span>
+          <span style="color: #88857d">C</span>
+           is a creative studio. Freedom, passion, and practice are the 
+          symbols of this place. We are committed to creating more and more
+          interesting things.
+        </p>
+      </div>
+      <div class="detail-floor">
+        <div class="toBehind-pointer">
+          <svg
+            t="1578933789254"
+            class="icon"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="774"
+            width="60"
+            height="60">
+              <path
+                d="M957.463608 326.608639 541.393447 753.98224l0 0-29.720905 30.527271-29.718859-30.527271 0 0L65.883523 326.608639l29.718859-30.525224 416.07016 427.370531 416.07016-427.370531L957.463608 326.608639z"
+                p-id="775">
+              </path>
+            </svg>
+        </div>
+        <!-- <div class="img-box"></div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -19,7 +48,9 @@ export default {
         <span class="word wisteria">Crazy&nbsp;For&nbsp;Code&nbsp;Studio</span>
         <span class="word peter-river">Crazy&nbsp;For&nbsp;Code&nbsp;Studio</span>
         <span class="word emerald">Crazy&nbsp;For&nbsp;Code&nbsp;Studio</span>
-        <span class="word sun-flower">Crazy&nbsp;For&nbsp;Code&nbsp;Studio</span>`
+        <span class="word sun-flower">Crazy&nbsp;For&nbsp;Code&nbsp;Studio</span>
+        `
+        // <span class="word sun-flower">Crazy&nbsp;For&nbsp;Code&nbsp;Studio</span>
     }
   },
   mounted() {
@@ -66,16 +97,28 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-
+@import url(https://fonts.googleapis.com/css?family=Open+Sans&display=swap);
+@keyframes pointer {
+  0% {
+    
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+}
 .detail-wrapper {
   position: relative;
   text-align: center;
-  height: 740px;
+  padding-top: 110px;
+  // height: 700px;
   min-height: 500px;
+  // background-color: #322e23;
+  background-color: white;
   overflow: hidden;
-  .logo-img {
-    width: 50%;
-  }
   &::before {
     content: "";
     position: absolute;
@@ -86,38 +129,54 @@ export default {
     left: 0;
   }
   .detail-body {
-    height: 752px;
-    background-color: #ffffff;
+    height: 620px;
+    // background-color: #ffffff;
     text-align: center;
     top: 0;
     margin: 0 auto;
     width: 80%;
     .detail-body-title {
-      position: relative;
-      display: flex;
-      top: 15%;
-      .preStr {
-        position: relative;
-        width: 70%;
-        font-size: 100px;
-        margin-left: 50px;
-        font-weight: bold;
-        font-family: Lato, sans-serif;
-        text-decoration: none;
-        justify-content: center;
-        color: #322e23;
+      // position: relative;
+      // display: flex;
+      // top: 15%;
+      padding: {
+        left: 5px;
+        right: 5px;
       }
+    }
+    .detail-content {
+      margin-top: 50px;
+      p {
+        color: black;
+        padding: 10px 20%;
+        font: {
+          size: 42px;
+          weight: 200;
+          family: "Open Sans script=all rev=1", "Adobe Blank";
+        }
+      }
+    }
+    .detail-floor {
+      margin-top: 20px;
+      .toBehind-pointer .icon {
+        opacity: 0;
+        animation: pointer infinite 2s ease;
+      }
+      // border-top: 70px solid #322e23;
+      // background-color: aquamarine;
     }
   }
 }
 </style>
 <style>
+@import url(https://fonts.googleapis.com/css?family=Seymour+One&display=swap);
 .rotating-text {
   width: 100%;
-  font-family: Lato, sans-serif;
-  font-size: 100px;
-  font-weight: bold;
-  color: white;
+  /* font-family: Lato, sans-serif; */
+  font-family: 'Seymour One', sans-serif;
+  font-size: 80px;
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
   /* transform: translateX(-80px); */
 }
 .rotating-text p {
@@ -146,15 +205,19 @@ export default {
 }
 .alizarin {
   color: #e74c3c;
+  /* color: #4285f4; */
 }
 .wisteria {
   color: #8e44ad;
+  /* color: #ea4335; */
 }
 .peter-river {
   color: #3498db;
+  /* color: #f9ab00; */
 }
 .emerald {
   color: #2ecc71;
+  /* color: #34a853; */
 }
 .sun-flower {
   color: #f1c40f;

@@ -57,6 +57,7 @@ html, body, h1, h2, h3, h4, h5, h6, p, blockquote, button, dd, div, dl, dt, form
   padding: 0px;
 }
 #app {
+  min-width: 1250px;
   opacity: 0;
   transition: opacity 1s ease;
 }
