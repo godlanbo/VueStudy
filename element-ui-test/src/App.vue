@@ -2,6 +2,10 @@
   <div id="app">
     <home-header></home-header>
     <home-detail></home-detail>
+    <!-- <hr /> -->
+    <div class="history-wrapper">
+      <home-history></home-history>
+    </div>
     <div class="home-swiper-wrapper">
       <home-swiper></home-swiper>
     </div>
@@ -12,12 +16,14 @@
 import HomeSwiper from '@/views/swiper/Swiper'
 import HomeHeader from '@/views/Head/HeadBar'
 import HomeDetail from '@/views/Introduction'
+import HomeHistory from '@/views/History/History'
 export default {
   name: "app",
   components: {
     HomeSwiper,
     HomeHeader,
-    HomeDetail
+    HomeDetail,
+    HomeHistory
   },
   data() {
     return {
@@ -51,7 +57,7 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss">
 html, body, h1, h2, h3, h4, h5, h6, p, blockquote, button, dd, div, dl, dt, form, li, ol, p, pre, td, th, ul {
   margin: 0px;
   padding: 0px;
@@ -60,12 +66,23 @@ html, body, h1, h2, h3, h4, h5, h6, p, blockquote, button, dd, div, dl, dt, form
   min-width: 1250px;
   opacity: 0;
   transition: opacity 1s ease;
+  hr {
+    margin: 0 auto;
+    border-bottom-color: #eee;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid #dfe2e5;
+  }
+  &.active {
+    opacity: 1;
+  }
+  .history-wrapper {
+    background-color: #f0f0f0;
+  }
+  .home-swiper-wrapper {
+    position: relative;
+    background-color: white;
+  }
 }
-#app.active {
-  opacity: 1;
-}
-.home-swiper-wrapper {
-  position: relative;
-  background-color: white;
-}
+
 </style>
