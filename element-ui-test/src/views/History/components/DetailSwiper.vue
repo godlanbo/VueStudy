@@ -1,28 +1,8 @@
 <template>
   <div>
-    <!-- <div class="left-content-wrapper"></div>
-    <div class="right-content-wrapper"></div> -->
     <swiper :options="swiperOption" class="detail-swiper">
-      <swiper-slide>
-        <div class="history-item">
-          <img src="https://balloonary.io/example_1.jpg">
-          <div class="content">
-            <div class="title">2020.1.14</div>
-            <div class="description">CFC成立第七周年</div>
-          </div>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="history-item">
-          <div class="img"></div>
-          <div class="content">123</div>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="history-item">
-          <div class="img"></div>
-          <div class="content">123</div>
-        </div>
+      <swiper-slide v-for="(item, index) in historyInfo" :key="index">
+        <info-item :historyInfo="item"></info-item>
       </swiper-slide>
       <div class="swiper-button-prev" slot="button-prev">
         <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -35,15 +15,22 @@
         </svg>
       </div>
     </swiper>
+    <div class="learn-more">
+      <a href="https://crazyforcode.org" target="_blank">
+        Learn more <span class="learn-more-point">>></span>
+      </a>
+    </div>
   </div>
 </template>
 <script>
 import { swiper, swiperSlide } from "vue-awesome-swiper"
+import InfoItem from './infoItem'
 export default {
   name: 'DetailHistory',
   components: {
     swiper,
-    swiperSlide
+    swiperSlide,
+    InfoItem
   },
   data() {
     return {
@@ -52,68 +39,79 @@ export default {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev"
         }
-      }
+      },
+      historyInfo: [{
+        imgUrl: 'https://balloonary.io/example_1.jpg',
+        title: '2020.1.14',
+        description: 'CFC成立第七周年'
+      }, {
+        imgUrl: 'https://balloonary.io/example_1.jpg',
+        title: '2020.1.14',
+        description: 'CFC成立第七周年'
+      }, {
+        imgUrl: 'https://balloonary.io/example_1.jpg',
+        title: '2020.1.14',
+        description: 'CFC成立第七周年'
+      }, {
+        imgUrl: 'https://balloonary.io/example_1.jpg',
+        title: '2020.1.14',
+        description: 'CFC成立第七周年'
+      }]
     }
   }
 }
 </script>
 <style lang="scss" scoped>
+@keyframes move {
+  0% {}
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(8px);
+    opacity: 0;
+  }
+}
 .detail-swiper {
   position: relative;
   width: 55%;
-  // text-align: center;
-  .history-item {
-    background-color: #fff;
-    height: 580px;
-    margin-top: 16px;
-    margin-bottom: 80px;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    border-radius: 16px;
-    overflow: hidden;
+  height: 610px;
+}
+.learn-more {
+  position: relative;
+  text-align: center;
+  a {
+    font-family: Open Sans,sans-serif;
+    font-size: 18px;
+    line-height: 24.8px;
+    font-weight: bold;
     position: relative;
-    flex-direction: column;
-    width: 81%;
-    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
-    img {
-      object-fit: cover;
-      height: 203px;
-      clip-path: circle(290% at 50% -270%);
-    }
-    .content {
-      margin-top: 15px;
-      padding: 48px 32px;
-      padding-top: 24px;
-      .title {
-        font-size: 30px;
-        font-weight: 700;
-        margin-bottom: 12px;
-        font-family: Open Sans,sans-serif;
-      }
-      .description {
-        font-size: 16px;
-        line-height: 28px;
-        font-family: Open Sans,sans-serif;
-        font-weight: 400;
-      }
+    left: 82px;
+    color: #30488F;
+    text-decoration: none;
+    .learn-more-point {
+      display: inline-block;
+      opacity: 0;
+      animation: move infinite 2s ease;
     }
   }
 }
 .swiper-button-prev,
 .swiper-button-next {
-  border: 1px;
+  top: 49%;
+  border: 1px solid #dfe1e5;
   width: 50px;
   height: 50px;
   line-height: 50px;
   border-radius: 50%;
-  box-shadow: 0 1px 1.5px 0 rgba(0,0,0,.12), 0 1px 1px 0 rgba(0,0,0,.24);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.04), 0 4px 8px 0 rgba(0,0,0,0.20);
   background-image: none;
+  background-color: #fff;
   transition: transform 0.6s,box-shadow 0.6s;
 }
 .swiper-button-prev:hover,
 .swiper-button-next:hover {
-  transform: scale(1.1);
+  transform: scale(1.02);
   box-shadow: 0 10px 10px 0 rgba(0,0,0,.19), 0 6px 3px 0 rgba(0,0,0,.23)
 }
 </style>

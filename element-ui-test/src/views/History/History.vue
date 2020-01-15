@@ -35,27 +35,24 @@ export default {
   height: 722px;
   width: 90%;
   margin: 0 auto;
-  // background-color: red;
   .left-content-wrapper {
     margin-top: 50px;
     display: inline-block;
     width: 50%;
-    // height: 600px;
     position: relative;
-    vertical-align: middle;
-    // background-color: red;
+    vertical-align: top;
+    .learn-more {
+      position: relative;
+    }
   }
   .right-content-wrapper {
-    margin-top: -90px;
-    margin-left: -50px;
+    margin: 0;
     display: inline-block;
     width: 50%;
-    vertical-align: middle;
+    vertical-align: top;
     position: relative;
     .info {
-      padding-top: 10px;
-      padding-left: 10px;
-      padding-right: 15px;
+      padding: 15% 15% 15% 0;
       h3 {
         font: {
           size: 48px;
