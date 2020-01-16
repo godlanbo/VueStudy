@@ -2,14 +2,14 @@
   <div id="app">
     <home-header></home-header>
     <home-detail></home-detail>
-    <!-- <hr /> -->
     <div class="history-wrapper">
       <home-history></home-history>
+      <divide-line></divide-line>
     </div>
+    <studio-info></studio-info>
     <div class="home-swiper-wrapper">
       <home-swiper></home-swiper>
     </div>
-    
   </div>
 </template>
 <script>
@@ -17,13 +17,17 @@ import HomeSwiper from '@/views/swiper/Swiper'
 import HomeHeader from '@/views/Head/HeadBar'
 import HomeDetail from '@/views/Introduction'
 import HomeHistory from '@/views/History/History'
+import DivideLine from '@/components/DivideLine'
+import StudioInfo from '@/views/StudioInfo/StudioInfo'
 export default {
   name: "app",
   components: {
     HomeSwiper,
     HomeHeader,
     HomeDetail,
-    HomeHistory
+    HomeHistory,
+    DivideLine,
+    StudioInfo
   },
   data() {
     return {
@@ -62,6 +66,9 @@ html, body, h1, h2, h3, h4, h5, h6, p, blockquote, button, dd, div, dl, dt, form
   margin: 0px;
   padding: 0px;
 }
+.test {
+  height: 500px;
+}
 #app {
   min-width: 1250px;
   opacity: 0;
@@ -78,6 +85,7 @@ html, body, h1, h2, h3, h4, h5, h6, p, blockquote, button, dd, div, dl, dt, form
   }
   .history-wrapper {
     background-color: #f0f0f0;
+    position: relative;
   }
   .home-swiper-wrapper {
     position: relative;

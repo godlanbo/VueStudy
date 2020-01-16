@@ -33,15 +33,18 @@
               </path>
             </svg>
         </div>
-        <!-- <div class="img-box"></div> -->
       </div>
     </div>
-    <div class="devide-line"></div>
+    <divide-line isTop></divide-line>
   </div>
 </template>
 <script>
+import DivideLine from '@/components/DivideLine'
 export default {
   name: 'Introduction',
+  components: {
+    DivideLine
+  },
   data() {
     return {
       rotatingText: `
@@ -166,17 +169,6 @@ export default {
       // border-top: 70px solid #322e23;
       // background-color: aquamarine;
     }
-  }
-  .devide-line {
-    background: url(https://balloonary.io/gray_terminator_top.png) repeat-x 50%;
-    background-size: 70px;
-    height: 35px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    z-index: 10;
   }
 }
 </style>
