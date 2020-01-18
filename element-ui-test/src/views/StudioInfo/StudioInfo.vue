@@ -19,9 +19,15 @@
         <div class="vueWaterfallEasy-content-wrapper">
           <vue-waterfall-easy
             :imgsArr="imgsArr"
-            :maxCols="2"
-            :imgWidth="200"
-          ></vue-waterfall-easy>
+            :maxCols="3"
+            :imgWidth="190"
+            :gap="5"
+          >
+            <!-- <template class="img-info" v-slot="props">
+              <p class="some-info">第{{props.index+1}}张图片</p>
+              <p class="some-info">something</p>
+            </template> -->
+          </vue-waterfall-easy>
         </div>
       </div>
     </div>
@@ -37,23 +43,29 @@ export default {
   data() {
     return {
       imgsArr: [{
-        src: 'http://localhost:8089/img/4250ccb2ff931408ea4cb61d9e3ec29f.jpeg',
-        href: 'https://www.baidu.com'
+        src: 'http://localhost:8089/img/1.jpg',
+        href: 'http://localhost:8089/img/1.jpg'
       }, {
-        src: 'http://localhost:8089/img/4250ccb2ff931408ea4cb61d9e3ec29f.jpeg',
-        href: 'https://www.baidu.com'
+        src: 'http://localhost:8089/img/2.jpg',
+        href: 'http://localhost:8089/img/2.jpg'
       }, {
-        src: 'http://localhost:8089/img/4250ccb2ff931408ea4cb61d9e3ec29f.jpeg',
-        href: 'https://www.baidu.com'
+        src: 'http://localhost:8089/img/3.jpg',
+        href: 'http://localhost:8089/img/3.jpg'
       }, {
-        src: 'http://localhost:8089/img/4250ccb2ff931408ea4cb61d9e3ec29f.jpeg',
-        href: 'https://www.baidu.com'
+        src: 'http://localhost:8089/img/4.jpg',
+        href: 'http://localhost:8089/img/4.jpg'
       }, {
-        src: 'http://localhost:8089/img/4250ccb2ff931408ea4cb61d9e3ec29f.jpeg',
-        href: 'https://www.baidu.com'
+        src: 'http://localhost:8089/img/5.jpg',
+        href: 'http://localhost:8089/img/5.jpg'
       }, {
-        src: 'http://localhost:8089/img/4250ccb2ff931408ea4cb61d9e3ec29f.jpeg',
-        href: 'https://www.baidu.com'
+        src: 'http://localhost:8089/img/6.jpg',
+        href: 'http://localhost:8089/img/6.jpg'
+      }, {
+        src: 'http://localhost:8089/img/7.jpg',
+        href: 'http://localhost:8089/img/7.jpg'
+      }, {
+        src: 'http://localhost:8089/img/8.jpg',
+        href: 'http://localhost:8089/img/8.jpg'
       }]
     }
   },
@@ -112,7 +124,8 @@ export default {
 }
 </style>
 <style>
-/* .vue-waterfall-easy {
-  left: 40% !important;
-} */
+.vue-waterfall-easy {
+  /* left: 47% !important; */
+  margin-left: -292px !important;
+}
 </style>

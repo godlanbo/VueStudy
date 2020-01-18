@@ -48,21 +48,37 @@ export default {
           prevEl: ".swiper-button-prev"
         }
       },
+      // {
+      //   imgUrl: 'https://thatgamecompany.com/wp-content/uploads/thatgamecompany-team-jenova.jpg',
+      //   name: '王辉宇',
+      //   designation: '三爷',
+      //   detail: '机器学习爱好者，后端开发，多语言大佬；“我不是天生旺仔，我只是天生爱笑”是他的名言'
+      // }, {
+      //   imgUrl: 'https://thatgamecompany.com/wp-content/uploads/thatgamecompany-team-jenova.jpg',
+      //   name: '陈斌',
+      //   designation: 'dbg',
+      //   detail: '传说中大名鼎鼎的 ：CFC团队钦定负责人 · Markdown Boy · 人工智能大科学家 · 茶道爱好者 · uwp隐藏开发者 · acm天赋选手 · 一个顶两个 · 拯救重庆算法 · 理工的卡丽熙 · 竹轩女权的解放者 · 花溪全境守护 · 不蠢者 · 肩负未来人类前进使命的微弱 小葱拌豆腐吞噬者大斌哥'
+      // }, {
+      //   imgUrl: 'https://thatgamecompany.com/wp-content/uploads/thatgamecompany-team-jenova.jpg',
+      //   name: '谢锦涛',
+      //   designation: '涛哥',
+      //   detail: '学霸涛，机器学习大佬，做事非常认真，持家的好男人'
+      // }
       memberInfo: [{
         imgUrl: 'https://thatgamecompany.com/wp-content/uploads/thatgamecompany-team-jenova.jpg',
-        name: '王辉宇',
-        designation: '三爷',
-        detail: '机器学习爱好者，后端开发，多语言大佬；“我不是天生旺仔，我只是天生爱笑”是他的名言'
+        name: 'jton',
+        designation: 'onsin',
+        detail: 'Video game evangelist, digital monk, contemplates the philosophy of life while eating fried chicken.'
       }, {
         imgUrl: 'https://thatgamecompany.com/wp-content/uploads/thatgamecompany-team-jenova.jpg',
-        name: '陈斌',
-        designation: 'dbg',
-        detail: '传说中大名鼎鼎的 ：CFC团队钦定负责人 · Markdown Boy · 人工智能大科学家 · 茶道爱好者 · uwp隐藏开发者 · acm天赋选手 · 一个顶两个 · 拯救重庆算法 · 理工的卡丽熙 · 竹轩女权的解放者 · 花溪全境守护 · 不蠢者 · 肩负未来人类前进使命的微弱 小葱拌豆腐吞噬者大斌哥'
+        name: 'jton',
+        designation: 'onsin',
+        detail: 'Video game evangelist, digital monk, contemplates the philosophy of life while eating fried chicken.'
       }, {
         imgUrl: 'https://thatgamecompany.com/wp-content/uploads/thatgamecompany-team-jenova.jpg',
-        name: '谢锦涛',
-        designation: '涛哥',
-        detail: '学霸涛，机器学习大佬，做事非常认真，持家的好男人'
+        name: 'jton',
+        designation: 'onsin',
+        detail: 'Video game evangelist, digital monk, contemplates the philosophy of life while eating fried chicken.'
       }, {
         imgUrl: 'https://thatgamecompany.com/wp-content/uploads/thatgamecompany-team-jenova.jpg',
         name: 'jton',
@@ -78,7 +94,7 @@ export default {
         name: 'jton',
         designation: 'onsin',
         detail: 'Video game evangelist, digital monk, contemplates the philosophy of life while eating fried chicken.'
-      },]
+      }]
     }
   },
   methods: {
@@ -94,6 +110,7 @@ export default {
 }
 .swiper-button-prev,
 .swiper-button-next {
+  top: 40%;
   border: 1px;
   width: 50px;
   height: 50px;
