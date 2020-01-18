@@ -84,6 +84,7 @@ export default {
     width: 50%;
     .the-studioInfo {
       padding: 20% 10% 15% 5%;
+      color: #153344;
       h3 {
         font: {
           size: 48px;
@@ -96,7 +97,7 @@ export default {
         font: {
           size: 24px;
           family: "Open Sans script=all rev=1", "Adobe Blank";
-          weight: 200;
+          weight: 300;
         }
       }
     }

@@ -1,33 +1,36 @@
 <template>
-  <header class="site-header">
-    <div class="head-left">
-      <!-- <abbr data-title="Crazy For Code">CFC</abbr> -->
-      <!-- <img src="@/assets/logo1.png" style="height: 60px; width: 200px;"> -->
-      <div class="shake-wrapper">
-        <div class="shake-logo">CrazyForCode</div>
+  <div>
+    <header class="site-header">
+      <div class="head-left">
+        <!-- <abbr data-title="Crazy For Code">CFC</abbr> -->
+        <!-- <img src="@/assets/logo1.png" style="height: 60px; width: 200px;"> -->
+        <div class="shake-wrapper">
+          <div class="shake-logo">CrazyForCode</div>
+        </div>
       </div>
-    </div>
-    <el-menu
-      class="head-right-menu"
-      mode="horizontal"
-      text-color="#24292e"
-    >
-    <!-- 
-      text-color="#f2f9e1"
-      background-color="#9cb198"
-      active-text-color="#322e23"
+      <el-menu
+        class="head-right-menu"
+        mode="horizontal"
+        text-color="#24292e"
+      >
+      <!-- 
+        text-color="#f2f9e1"
+        background-color="#9cb198"
+        active-text-color="#322e23"
 
-      text-color="#fff"
-      background-color="#24292e"
-      active-text-color="#fff"
-     -->
-      <el-menu-item class="menu-item" index="1">Home</el-menu-item>
-      <el-menu-item class="menu-item" index="3">
-        <a href="https://www.crazyforcode.org" target="_blank">Blog</a>
-      </el-menu-item>
-      <el-menu-item class="menu-item" index="4">TimeBase</el-menu-item>
-    </el-menu>
-  </header>
+        text-color="#fff"
+        background-color="#24292e"
+        active-text-color="#fff"
+      -->
+        <el-menu-item class="menu-item" index="1">Home</el-menu-item>
+        <el-menu-item class="menu-item" index="3">
+          <a href="https://www.crazyforcode.org" target="_blank">Blog</a>
+        </el-menu-item>
+        <el-menu-item class="menu-item" index="4">TimeBase</el-menu-item>
+      </el-menu>
+    </header>
+    <router-view />
+  </div>
 </template>
 <script>
 export default {

@@ -53,6 +53,7 @@ export default {
     position: relative;
     .info {
       padding: 15% 15% 15% 0;
+      color: #153344;
       h3 {
         font: {
           size: 48px;
@@ -65,7 +66,7 @@ export default {
         font: {
           size: 24px;
           family: "Open Sans script=all rev=1", "Adobe Blank";
-          weight: 200;
+          weight: 300;
         }
       }
     }

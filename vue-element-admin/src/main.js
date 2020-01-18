@@ -19,7 +19,6 @@ import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
 
-
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium' // set element-ui default size
 })

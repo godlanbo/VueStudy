@@ -107,6 +107,7 @@ export default {
   width: 90%;
   margin: 0 auto;
   text-align: center;
+  padding-bottom: 50px;
 }
 .swiper-button-prev,
 .swiper-button-next {
