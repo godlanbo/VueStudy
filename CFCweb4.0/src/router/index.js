@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HeaderBar from '@/views/HomePage/components/HeaderBar'
+import layout from '@/layout/index'
 
 Vue.use(Router)
 
 const constantRoutes = [
   {
     path: '/',
-    component: HeaderBar,
+    component: layout,
     redirect: '/Home',
     children: [
       {
