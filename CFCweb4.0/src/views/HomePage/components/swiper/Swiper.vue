@@ -27,6 +27,9 @@ export default {
     swiperSlide,
     Member
   },
+  props: {
+    memberInfo: Array
+  },
   computed: {
     pages() {
       let pages = []
@@ -64,37 +67,6 @@ export default {
       //   designation: '涛哥',
       //   detail: '学霸涛，机器学习大佬，做事非常认真，持家的好男人'
       // }
-      memberInfo: [{
-        imgUrl: 'https://thatgamecompany.com/wp-content/uploads/thatgamecompany-team-jenova.jpg',
-        name: 'jton',
-        designation: 'onsin',
-        detail: 'Video game evangelist, digital monk, contemplates the philosophy of life while eating fried chicken.'
-      }, {
-        imgUrl: 'https://thatgamecompany.com/wp-content/uploads/thatgamecompany-team-jenova.jpg',
-        name: 'jton',
-        designation: 'onsin',
-        detail: 'Video game evangelist, digital monk, contemplates the philosophy of life while eating fried chicken.'
-      }, {
-        imgUrl: 'https://thatgamecompany.com/wp-content/uploads/thatgamecompany-team-jenova.jpg',
-        name: 'jton',
-        designation: 'onsin',
-        detail: 'Video game evangelist, digital monk, contemplates the philosophy of life while eating fried chicken.'
-      }, {
-        imgUrl: 'https://thatgamecompany.com/wp-content/uploads/thatgamecompany-team-jenova.jpg',
-        name: 'jton',
-        designation: 'onsin',
-        detail: 'Video game evangelist, digital monk, contemplates the philosophy of life while eating fried chicken.'
-      }, {
-        imgUrl: 'https://thatgamecompany.com/wp-content/uploads/thatgamecompany-team-jenova.jpg',
-        name: 'jton',
-        designation: 'onsin',
-        detail: 'Video game evangelist, digital monk, contemplates the philosophy of life while eating fried chicken.'
-      }, {
-        imgUrl: 'https://thatgamecompany.com/wp-content/uploads/thatgamecompany-team-jenova.jpg',
-        name: 'jton',
-        designation: 'onsin',
-        detail: 'Video game evangelist, digital monk, contemplates the philosophy of life while eating fried chicken.'
-      }]
     }
   },
   methods: {
