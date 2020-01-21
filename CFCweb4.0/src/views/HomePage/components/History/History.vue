@@ -1,7 +1,7 @@
 <template>
   <div class="history-content-wrapper">
     <div class="left-content-wrapper">
-      <detail-swiper></detail-swiper>
+      <detail-swiper :historyInfo="historyInfo"></detail-swiper>
     </div>
     <div class="right-content-wrapper">
       <div class="info">
@@ -23,6 +23,9 @@
 import DetailSwiper from './components/DetailSwiper'
 export default {
   name: 'History',
+  props: {
+    historyInfo: Array
+  },
   components: {
     DetailSwiper
   }

@@ -32,6 +32,9 @@ export default {
     swiperSlide,
     InfoItem
   },
+  props: {
+    historyInfo: Array
+  },
   data() {
     return {
       swiperOption: {
@@ -39,24 +42,7 @@ export default {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev"
         }
-      },
-      historyInfo: [{
-        imgUrl: 'https://balloonary.io/example_1.jpg',
-        title: '2020.1.14',
-        description: 'CFC成立第七周年'
-      }, {
-        imgUrl: 'https://balloonary.io/example_1.jpg',
-        title: '2020.1.14',
-        description: 'CFC成立第七周年'
-      }, {
-        imgUrl: 'https://balloonary.io/example_1.jpg',
-        title: '2020.1.14',
-        description: 'CFC成立第七周年'
-      }, {
-        imgUrl: 'https://balloonary.io/example_1.jpg',
-        title: '2020.1.14',
-        description: 'CFC成立第七周年'
-      }]
+      }
     }
   }
 }

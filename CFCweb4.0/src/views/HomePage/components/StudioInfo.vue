@@ -18,6 +18,8 @@
       <div class="vueWaterfallEasy-wrapper">
         <div class="vueWaterfallEasy-content-wrapper">
           <vue-waterfall-easy
+            ref="waterfall"
+            @scrollReachBottom="cancelGetData"
             :imgsArr="imgsArr"
             :maxCols="3"
             :imgWidth="190"
@@ -40,35 +42,43 @@ export default {
   components: {
     vueWaterfallEasy
   },
+  props: {
+    imgsArr: Array
+  },
   data() {
     return {
-      imgsArr: [{
-        src: 'http://localhost:8089/img/1.jpg',
-        href: 'http://localhost:8089/img/1.jpg'
-      }, {
-        src: 'http://localhost:8089/img/2.jpg',
-        href: 'http://localhost:8089/img/2.jpg'
-      }, {
-        src: 'http://localhost:8089/img/3.jpg',
-        href: 'http://localhost:8089/img/3.jpg'
-      }, {
-        src: 'http://localhost:8089/img/4.jpg',
-        href: 'http://localhost:8089/img/4.jpg'
-      }, {
-        src: 'http://localhost:8089/img/5.jpg',
-        href: 'http://localhost:8089/img/5.jpg'
-      }, {
-        src: 'http://localhost:8089/img/6.jpg',
-        href: 'http://localhost:8089/img/6.jpg'
-      }, {
-        src: 'http://localhost:8089/img/7.jpg',
-        href: 'http://localhost:8089/img/7.jpg'
-      }, {
-        src: 'http://localhost:8089/img/8.jpg',
-        href: 'http://localhost:8089/img/8.jpg'
-      }]
+      // imgsArr: [{
+      //   src: 'http://localhost:8089/img/1.jpg',
+      //   href: 'http://localhost:8089/img/1.jpg'
+      // }, {
+      //   src: 'http://localhost:8089/img/2.jpg',
+      //   href: 'http://localhost:8089/img/2.jpg'
+      // }, {
+      //   src: 'http://localhost:8089/img/3.jpg',
+      //   href: 'http://localhost:8089/img/3.jpg'
+      // }, {
+      //   src: 'http://localhost:8089/img/4.jpg',
+      //   href: 'http://localhost:8089/img/4.jpg'
+      // }, {
+      //   src: 'http://localhost:8089/img/5.jpg',
+      //   href: 'http://localhost:8089/img/5.jpg'
+      // }, {
+      //   src: 'http://localhost:8089/img/6.jpg',
+      //   href: 'http://localhost:8089/img/6.jpg'
+      // }, {
+      //   src: 'http://localhost:8089/img/7.jpg',
+      //   href: 'http://localhost:8089/img/7.jpg'
+      // }, {
+      //   src: 'http://localhost:8089/img/8.jpg',
+      //   href: 'http://localhost:8089/img/8.jpg'
+      // }]
     }
   },
+  methods: {
+    cancelGetData() {
+       this.$refs.waterfall.waterfallOver()
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

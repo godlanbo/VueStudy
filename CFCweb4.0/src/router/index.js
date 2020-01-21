@@ -8,16 +8,21 @@ const constantRoutes = [
   {
     path: '/',
     component: layout,
-    redirect: '/Home',
+    redirect: '/home',
     children: [
       {
-        path: 'Home',
+        path: 'home',
         component: () => import('@/views/HomePage/Home'),
-        name: 'Home',
+        name: 'Home'
         // meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+      },
+      {
+        path: 'time-base',
+        component: () => import('@/views/TimeBase/TimeBase'),
+        name: 'TimeBase'
       }
     ]
-  },
+  }
 ]
 
 const createRouter = () => new Router({

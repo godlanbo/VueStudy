@@ -2,11 +2,11 @@
   <div id="home">
     <home-detail></home-detail>
     <div class="history-wrapper">
-      <home-history></home-history>
+      <home-history :historyInfo="historyInfo"></home-history>
       <divide-line></divide-line>
     </div>
     <div class="studio-wrapper">
-      <studio-info></studio-info>
+      <studio-info :imgsArr="studioInfo"></studio-info>
       <divide-line isTop></divide-line>
     </div>
     <div class="home-swiper-wrapper">
@@ -19,7 +19,7 @@
           理工最大的的极客聚居地之一，并创造了多个校史第一。
         </p>
       </div>
-      <home-swiper></home-swiper>
+      <home-swiper :memberInfo="teamInfo"></home-swiper>
       <divide-line></divide-line>
     </div>
   </div>
@@ -30,6 +30,7 @@ import HomeDetail from './components/Introduction'
 import HomeHistory from './components/History/History'
 import DivideLine from '@/components/DivideLine'
 import StudioInfo from './components/StudioInfo'
+import { getHomeData } from '@/api/home'
 export default {
   name: "home",
   components: {
@@ -39,6 +40,13 @@ export default {
     DivideLine,
     StudioInfo
   },
+  data() {
+    return {
+      historyInfo: [],
+      studioInfo: [],
+      teamInfo: []
+    }
+  },
   mounted() {
     const loading = document.querySelector('.loading-wrapper')
     setTimeout(() => {
@@ -46,6 +54,17 @@ export default {
     }, 1100)
     loading.style.opacity = 0
     document.querySelector('#home').className = 'active'
+  },
+  created() {
+    getHomeData().then(response => {
+      console.log(response)
+      const data = response.data.data
+      this.historyInfo = data.timeBase
+      this.studioInfo = data.imgs
+      this.teamInfo = data.ourTeam
+    }).catch(err => {
+      console.log(err)
+    })
   }
 }
 </script>

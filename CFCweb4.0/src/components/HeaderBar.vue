@@ -11,6 +11,7 @@
       class="head-right-menu"
       mode="horizontal"
       text-color="#24292e"
+      router
     >
     <!-- 
       text-color="#f2f9e1"
@@ -21,11 +22,11 @@
       background-color="#24292e"
       active-text-color="#fff"
     -->
-      <el-menu-item class="menu-item" index="1">Home</el-menu-item>
+      <el-menu-item class="menu-item" index="/home">Home</el-menu-item>
       <el-menu-item class="menu-item" index="3">
         <a href="https://www.crazyforcode.org" target="_blank">Blog</a>
       </el-menu-item>
-      <el-menu-item class="menu-item" index="4">TimeBase</el-menu-item>
+      <el-menu-item class="menu-item" index="/time-base">TimeBase</el-menu-item>
     </el-menu>
   </header>
 </template>
@@ -70,9 +71,7 @@ export default {
   z-index: 999;
   opacity: 1;
   transition: 0.5s ease,top 0.5s ease;
-  box-shadow: 0 0.3px 0.7px rgba(0, 0, 0, 0.126),
-    0 0.9px 1.7px rgba(0, 0, 0, 0.179), 0 1.8px 3.5px rgba(0, 0, 0, 0.224),
-    0 3.7px 7.3px rgba(0, 0, 0, 0.277);/* 0 10px 20px rgba(0, 0, 0, 0.4); */
+  box-shadow: 0 0 30px 0 rgba(32,39,48,.08);
   /* border-bottom: 1px solid #dfdede; */
   /* background-color: #24292e; */
   background-color: white;
