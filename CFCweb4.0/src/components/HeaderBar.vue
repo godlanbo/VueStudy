@@ -78,9 +78,10 @@ export default {
   backdrop-filter: blur(30px);
 }
 .site-header:hover {
-  box-shadow: 0 0.7px 1px rgba(0, 0, 0, 0.157),
-    0 1.7px 2.6px rgba(0, 0, 0, 0.224), 0 3.5px 5.3px rgba(0, 0, 0, 0.28),
-    0 7.3px 11px rgba(0, 0, 0, 0.346); /* 0 20px 30px rgba(0, 0, 0, 0.5); */
+  /* box-shadow: 0 0.7px 1px rgba(0, 0, 0, 0.157),
+    0 1.7px 2.6px rgba(0, 0, 0, 0.224); */
+  /* box-shadow: 0 2px 12px 0 rgba(0,0,0,.1); */
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 15px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
 }
 .head-left {
   line-height: 60px;
