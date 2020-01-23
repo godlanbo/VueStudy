@@ -20,6 +20,11 @@ const constantRoutes = [
         path: 'time-base',
         component: () => import('@/views/TimeBase/TimeBase'),
         name: 'TimeBase'
+      },
+      {
+        path: 'team',
+        component: () => import('@/views/Team/Team'),
+        name: 'Team'
       }
     ]
   }

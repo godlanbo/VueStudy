@@ -13,7 +13,7 @@
         :itemInfo="item"
       ></timebase-item>
     </div>
-    <div class="test"></div>
+    <div class="fill-footer"></div>
   </div>
 </template>
 <script>
@@ -26,96 +26,27 @@ export default {
   },
   data() {
     return {
-      itemInfo: [{
-        title: 2014,
-        detailInfo: [{
-          title: '1.14',
-          content: '7周年',
-          imgUrl: 'https://ooo.0o0.ooo/2016/09/07/57d027c54c85c.png'
-        }, {
-          title: '1.14',
-          content: '7周年'
-        }, {
-          title: '1.14',
-          content: '7周年'
-        }, {
-          title: '1.14',
-          content: '7周年'
-        }, {
-          title: '1.14',
-          content: '7周年'
-        }, {
-          title: '1.14',
-          content: '7周年'
-        }]
-      }, {
-        title: 2013,
-        detailInfo: [{
-          title: '1.14',
-          content: '7周年',
-          imgUrl: 'https://ooo.0o0.ooo/2016/09/07/57d027c54c85c.png'
-        }, {
-          title: '1.14',
-          content: '7周年'
-        }, {
-          title: '1.14',
-          content: '7周年'
-        }, {
-          title: '1.14',
-          content: '7周年'
-        }, {
-          title: '1.14',
-          content: '7周年'
-        }, {
-          title: '1.14',
-          content: '7周年'
-        }]
-      }, {
-        title: 2012,
-        detailInfo: [{
-          title: '1.14',
-          content: '7周年',
-          imgUrl: 'https://ooo.0o0.ooo/2016/09/07/57d027c54c85c.png'
-        }, {
-          title: '1.14',
-          content: '7周年'
-        }, {
-          title: '1.14',
-          content: '7周年'
-        }, {
-          title: '1.14',
-          content: '7周年'
-        }, {
-          title: '1.14',
-          content: '7周年'
-        }, {
-          title: '1.14',
-          content: '7周年'
-        }]
-      }]
+      itemInfo: []
     }
   },
   created() {
     getTimeBaseData().then(response => {
-      console.log(response)
+      const data = response.data.data
+      this.itemInfo = data.itemInfo
     }).catch(err => {
       console.log(err)
+      this.$message({
+        type: 'error',
+        message: err.message
+      })
     })
-  },
-  mounted() {
-    const loading = document.querySelector('.loading-wrapper')
-    setTimeout(() => {
-      loading.style.display = 'none'
-    }, 1100)
-    loading.style.opacity = 0
-    // document.querySelector('#home').className = 'active'
   }
 }
 </script>
 <style lang="scss" scoped>
 @import url(https://fonts.googleapis.com/css?family=Open+Sans&display=swap);
 #timebase {
-  .test {
+  .fill-footer {
     height: 300px;
   }
   .content-title-wrapper {

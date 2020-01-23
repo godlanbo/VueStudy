@@ -16,9 +16,9 @@
       </div>
     </swiper>
     <div class="learn-more">
-      <a href="https://crazyforcode.org" target="_blank">
+      <router-link to="/time-base">
         Learn more <span class="learn-more-point">>></span>
-      </a>
+      </router-link>
     </div>
   </div>
 </template>

@@ -48,11 +48,11 @@ export default {
     }
   },
   mounted() {
-    const loading = document.querySelector('.loading-wrapper')
-    setTimeout(() => {
-      loading.style.display = 'none'
-    }, 1100)
-    loading.style.opacity = 0
+    // const loading = document.querySelector('.loading-wrapper')
+    // setTimeout(() => {
+    //   loading.style.display = 'none'
+    // }, 1100)
+    // loading.style.opacity = 0
     document.querySelector('#home').className = 'active'
   },
   created() {
@@ -64,6 +64,10 @@ export default {
       this.teamInfo = data.ourTeam
     }).catch(err => {
       console.log(err)
+      this.$message({
+        type: 'error',
+        message: err.message
+      })
     })
   }
 }

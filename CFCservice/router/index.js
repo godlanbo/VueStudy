@@ -2,9 +2,11 @@ const express = require('express')
 const boom = require('boom')
 const router = express.Router()
 const homeRouter = require('../router/home')
+const timebaseRouter = require('../router/timebase')
 const { ErrorModel } = require('../model/resModel')
 
 router.use('/api/home', homeRouter)
+router.use('/api/timebase', timebaseRouter)
 /**
  * 集中处理404请求的中间件
  * 注意：该中间件必须放在正常处理流程之后

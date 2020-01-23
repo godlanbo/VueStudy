@@ -27,6 +27,7 @@
         <a href="https://www.crazyforcode.org" target="_blank">Blog</a>
       </el-menu-item>
       <el-menu-item class="menu-item" index="/time-base">TimeBase</el-menu-item>
+      <el-menu-item class="menu-item" index="/team">Team</el-menu-item>
     </el-menu>
   </header>
 </template>
@@ -88,7 +89,7 @@ export default {
   width: 20%;
 }
 .head-right-menu {
-  margin-left: 50%;
+  margin-left: 40%;
   /* height: 100%; */
 }
 .head-right-menu .menu-item {

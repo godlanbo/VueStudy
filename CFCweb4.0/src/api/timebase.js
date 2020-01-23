@@ -2,7 +2,7 @@ import request from '../utils/request'
 
 export function getTimeBaseData() {
   return request({
-    url: '/time-base/getData',
+    url: '/timebase/getData',
     method: 'get'
   })
 }

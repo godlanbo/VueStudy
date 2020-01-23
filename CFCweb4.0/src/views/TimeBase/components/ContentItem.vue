@@ -69,27 +69,30 @@ export default {
       }
       .item-content-wrapper {
         box-sizing: border-box;
-        padding: 15px 0;
+        // padding: 15px 0;
         overflow: hidden;
         width: 48%;
         flex: 0 1 auto;
         margin: 0 1%;
         flex-basis: 48%;
         // box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
-        // border-radius: 15px;
+        box-shadow: 0 2px 12px 0 rgba(0,0,0,.1),
+        2px 0 12px 0 rgba(0,0,0,.1),-2px 0 12px 0 rgba(0,0,0,.1),
+        0 -2px 12px 0 rgba(0,0,0,.1);
+        border-radius: 15px;
       }
       .item-content {
-        padding: 0 15px;
+        padding-right: 25px;
+        padding-left: 10px;
         position: relative;
         left: 17px;
         height: 532px;
         overflow-y: scroll;
         width: 100%;
         .content-detail {
-          
           margin: 10px 0;
           box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 15px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(46, 70, 145, 0.5) 0px 2px 0px 0px inset;
-          border-radius: 20px;
+          border-radius: 15px;
           padding: 10px;
           font: {
             size: 20px;
