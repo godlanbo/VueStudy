@@ -39,31 +39,36 @@
           ref="form"
           :model="postForm"
           label-position="right"
+          :rules="rules"
+          status-icon
+          hide-required-asterisk
+          size="small"
         >
-          <el-form-item label="你的名字">
+          <el-form-item label="你的名字" prop="name">
             <el-input v-model="postForm.name"></el-input>
           </el-form-item>
           <el-form-item label="你想做的方向">
             <el-input v-model="postForm.intention"></el-input>
           </el-form-item>
-          <el-form-item label="你的QQ号">
+          <el-form-item label="你的QQ号" prop="qqNum">
             <el-input v-model="postForm.qqNum"></el-input>
           </el-form-item>
-          <el-form-item label="你的年级">
+          <el-form-item label="你的年级" prop="grade">
             <el-input v-model="postForm.grade"></el-input>
           </el-form-item>
-          <el-form-item label="你的专业">
+          <el-form-item label="你的专业" prop="specialty">
             <el-input v-model="postForm.specialty"></el-input>
           </el-form-item>
         </el-form>
       </div>
       <div class="submit-wrapper">
-        <el-button type="primary">提交</el-button>
+        <el-button type="primary" @click="handleSubmit">提交</el-button>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { submitJoinData } from '@/api/index'
 export default {
   name: 'JoinUs',
   data() {
@@ -72,7 +77,15 @@ export default {
       postForm: {
         name: '',
         intention: '',
-        qqNum: ''
+        qqNum: '',
+        grade: '',
+        specialty: ''
+      },
+      rules: {
+        name: [{ required: true, message: '请输入名字', trigger: 'blur' }],
+        qqNum: [{ required: true, message: '请输入qq号', trigger: 'blur' }],
+        grade: [{ required: true, message: '请输入年级', trigger: 'blur' }],
+        specialty: [{ required: true, message: '请输入专业', trigger: 'blur' }]
       }
     }
   },
@@ -96,6 +109,30 @@ export default {
     },
     handleJoinUsClose() {
       this.isOpen = false
+      this.setFormDefault()
+    },
+    setFormDefault() {
+      this.$refs.form.resetFields()
+      this.postForm.intention = ''
+    },
+    handleSubmit() {
+      console.log(1)
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          submitJoinData(this.postForm).then(res => {
+            console.log(res)
+            this.$message({
+              type: 'success',
+              message: '提交信息成功'
+            })
+            this.setFormDefault()
+          }).catch(err => {
+            console.log(err)
+          })
+        } else {
+          return false
+        }
+      })
     }
   }
 }
@@ -182,7 +219,7 @@ export default {
     .join-us-content {
       padding: 0 16px;
       .el-form.el-form--label-right .el-form-item {
-        margin-bottom: 0;
+        margin-bottom: 15.5px;
       }
     }
     .submit-wrapper {

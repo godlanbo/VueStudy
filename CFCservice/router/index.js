@@ -3,10 +3,27 @@ const boom = require('boom')
 const router = express.Router()
 const homeRouter = require('../router/home')
 const timebaseRouter = require('../router/timebase')
-const { ErrorModel } = require('../model/resModel')
+const { ErrorModel, SuccessModel } = require('../model/resModel')
+const { insertData, queryData } = require('../utils/data')
 
 router.use('/api/home', homeRouter)
 router.use('/api/timebase', timebaseRouter)
+
+router.post('/api/join-us', (req, res, next) => {
+  insertData(req.body, 'join').then(() => {
+    res.json(new SuccessModel('提交成功'))
+  }).catch(err => {
+    res.json(new ErrorModel(err))
+  })
+})
+
+router.post('/api/queryInfo', (req, res, next) => {
+  queryData(req.body.queryString, 'team').then(data => {
+    res.json(new SuccessModel(data))
+  }).catch(err => {
+    res.json(new ErrorModel(err))
+  })
+})
 /**
  * 集中处理404请求的中间件
  * 注意：该中间件必须放在正常处理流程之后

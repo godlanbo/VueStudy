@@ -3,7 +3,9 @@
     <back-top></back-top>
     <join-us></join-us>
     <header-bar></header-bar>
-    <router-view />
+    <transition name="fade">
+      <router-view />
+    </transition>
     <div class="footer-wrapper">
       <div class="logo">
         <img src="@/assets/logo1.png"> 
@@ -43,6 +45,12 @@ export default {
 #layout {
   display: flex;
   flex-direction: column;
+  .fade-enter {
+    opacity: 0;
+  }
+  .fade-enter-active {
+    transition: opacity 1s ease;
+  }
   .footer-wrapper {
     position: relative;
     display: flex;

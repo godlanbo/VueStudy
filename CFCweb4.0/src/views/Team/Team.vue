@@ -1,7 +1,7 @@
 <template>
   <div id="team">
     <div class="map-wrapper">
-      <span>当前选中了: {{ cityName || '-' }}</span>
+      <span style="margin-left: 20%;">当前选中了: {{ cityName || '-' }}</span>
       <ve-map
         :data="chartData"
         :settings="chartSettings"
@@ -10,32 +10,46 @@
       ></ve-map>
     </div>
     <div class="showInfo-table-wrapper">
-      <el-table></el-table>
+      <el-table :data="tableData" style="width: 100%" height="283" stripe>
+         <el-table-column
+          align="center"
+          prop="name"
+          label="姓名"
+          width="455px">
+        </el-table-column>
+        <el-table-column
+          align="center"
+          prop="workCompany"
+          label="工作单位"
+          width="455px">
+        </el-table-column>
+        <el-table-column
+          align="center"
+          prop="workCity"
+          label="工作城市"
+          width="455px">
+        </el-table-column>
+      </el-table>
     </div>
   </div>
 </template>
 <script>
+import { queryTeamInfo } from '@/api/index'
 export default {
   name: 'Team',
   data () {
     this.chartSettings = {
       position: 'china',
+      labelMap: {
+        'place': '位置',
+        'number': '工作人数'
+      },
       aspectScale: 0.7,
       zoom: 1,
-      roam: true,
+      roam: 'scale',
       scaleLimit: {
         min: 1
       },
-      // label: {
-      //   // 绝对的像素值
-      //   // position: [10, 10],
-      //   // 相对的百分比
-      //   normal: {
-      //     show: true,
-      //     position: 'inside',
-      //     rotate: 90
-      //   }
-      // },
       itemStyle: {
         normal: {
           areaColor: '#eee',
@@ -61,28 +75,45 @@ export default {
     }
     this.chartEvents = {
       click: (value) => {
-        this.cityName = this.cityName == '' ? value.name : ''
+        if (value.name !== this.cityName) {
+          this.cityName = value.name
+          this.queryMapData(value.name)
+        }
       }
     }
     return {
       cityName: '',
       chartData: {
-        columns: ['位置', '工作人数'],
-        rows: [
-          { '位置': '吉林', '工作人数': 123 },
-          { '位置': '北京', '工作人数': 1223 },
-          { '位置': '上海', '工作人数': 2123 },
-          { '位置': '浙江', '工作人数': 4123 }
-        ]
-      }
+        columns: ['place', 'number'],
+        rows: this.getMapData()
+      },
+      tableData: []
+    }
+  },
+  methods: {
+    getMapData() {
+      return [
+        { 'place': '吉林', 'number': 123 },
+        { 'place': '北京', 'number': 1223 },
+        { 'place': '上海', 'number': 2123 },
+        { 'place': '浙江', 'number': 4123 }
+      ]
+    },
+    queryMapData(queryString) {
+      queryTeamInfo(queryString).then(response => {
+        this.tableData = response.data.data
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }
 </script>
 <style lang="scss" scoped>
 #team {
+  opacity: 1;
   .map-wrapper {
-    padding-top: 150px;
+    padding-top: 100px;
     position: relative;
     width: 90%;
     margin: 0 auto;

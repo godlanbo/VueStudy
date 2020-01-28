@@ -32,7 +32,7 @@ export default {
   created() {
     getTimeBaseData().then(response => {
       const data = response.data.data
-      this.itemInfo = data.itemInfo
+      this.itemInfo = data
     }).catch(err => {
       console.log(err)
       this.$message({
@@ -46,6 +46,7 @@ export default {
 <style lang="scss" scoped>
 @import url(https://fonts.googleapis.com/css?family=Open+Sans&display=swap);
 #timebase {
+  opacity: 1;
   .fill-footer {
     height: 300px;
   }

@@ -47,19 +47,11 @@ export default {
       teamInfo: []
     }
   },
-  mounted() {
-    // const loading = document.querySelector('.loading-wrapper')
-    // setTimeout(() => {
-    //   loading.style.display = 'none'
-    // }, 1100)
-    // loading.style.opacity = 0
-    document.querySelector('#home').className = 'active'
-  },
   created() {
     getHomeData().then(response => {
       console.log(response)
       const data = response.data.data
-      this.historyInfo = data.timeBase
+      this.historyInfo = data.timebase
       this.studioInfo = data.imgs
       this.teamInfo = data.ourTeam
     }).catch(err => {
@@ -83,11 +75,7 @@ html, body, h1, h2, h3, h4, h5, h6, p, blockquote, button, dd, div, dl, dt, form
   // display: flex;
   // flex-direction: column;
   // box-sizing: border-box;
-  opacity: 0;
-  transition: opacity 1s ease;
-  &.active {
-    opacity: 1;
-  }
+  opacity: 1;
   .history-wrapper {
     background-color: #f0f0f0;
     position: relative;
