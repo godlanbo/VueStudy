@@ -49,7 +49,6 @@ export default {
   },
   created() {
     getHomeData().then(response => {
-      console.log(response)
       const data = response.data.data
       this.historyInfo = data.timebase
       this.studioInfo = data.imgs

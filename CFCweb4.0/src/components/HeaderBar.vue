@@ -11,6 +11,7 @@
       class="head-right-menu"
       mode="horizontal"
       text-color="#24292e"
+      :default-active="activeMenu"
       router
     >
     <!-- 
@@ -37,6 +38,11 @@ export default {
   data() {
     return {
       preScrollTop: 0
+    }
+  },
+  computed: {
+    activeMenu() {
+      return this.$route.path
     }
   },
   methods: {

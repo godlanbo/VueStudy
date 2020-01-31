@@ -1,14 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import layout from '@/layout/index'
+import layoutHome from '@/layoutHome'
+import layoutAdmin from '@/layoutAdmin'
 
 Vue.use(Router)
 
 const constantRoutes = [
   {
     path: '/',
-    component: layout,
+    component: layoutHome,
     redirect: '/home',
+    hidden: true,
     children: [
       {
         path: 'home',
@@ -27,6 +29,17 @@ const constantRoutes = [
         name: 'Team'
       }
     ]
+  },
+  {
+    path: '/admin',
+    component: layoutAdmin,
+    redirect: '/admin/dashboard',
+    children: [{
+      path: 'dashboard',
+      name: 'Dashboard',
+      component: () => import('@/views/dashboard/index'),
+      meta: { title: 'Dashboard', icon: 'dashboard' }
+    }]
   }
 ]
 
