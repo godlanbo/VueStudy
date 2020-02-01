@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getToken } from '@/utils/auth'
 // import { MessageBox, Message } from 'element-ui'
 
 // create an axios instance
@@ -10,6 +11,9 @@ const service = axios.create({
 
 service.interceptors.request.use(
   config => {
+    if (getToken()) {
+      config.headers['Authorization'] = `Bearer ${getToken()}`
+    }
     return config
   },
   error => {
