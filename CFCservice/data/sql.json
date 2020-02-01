@@ -225,5 +225,11 @@
       "grade": "777",
       "specialty": "777"
     }
+  ],
+  "admin": [
+    {
+      "username": "godlanbo",
+      "password": "c94faa35f9af9e428c5ce3fd5e5c4d37"
+    }
   ]
 }

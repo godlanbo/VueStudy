@@ -3,11 +3,16 @@ const boom = require('boom')
 const router = express.Router()
 const homeRouter = require('../router/home')
 const timebaseRouter = require('../router/timebase')
+const adminRouter = require('../router/admin')
+const { jwtAuth } = require('../utils/jwt')
 const { ErrorModel, SuccessModel } = require('../model/resModel')
 const { insertData, queryData } = require('../utils/data')
 
+router.use(jwtAuth)
+
 router.use('/api/home', homeRouter)
 router.use('/api/timebase', timebaseRouter)
+router.use('/api', adminRouter)
 
 router.post('/api/join-us', (req, res, next) => {
   insertData(req.body, 'join').then(() => {

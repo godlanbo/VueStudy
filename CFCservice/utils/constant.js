@@ -8,5 +8,8 @@ const CODE_SUCCESS = 0
 module.exports = {
   CODE_ERROR,
   CODE_SUCCESS,
-  DATA_PATH
+  DATA_PATH,
+  PRIVATE_KEY: 'cfc2013114',
+  SALT_VALUE: 'godlanbo',
+  JWT_EXPIRED: 60 * 60 * 24
 }
