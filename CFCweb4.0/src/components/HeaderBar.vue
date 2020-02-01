@@ -92,7 +92,7 @@ export default {
 }
 .head-left {
   line-height: 60px;
-  width: 20%;
+  width: 23%;
 }
 .head-right-menu {
   margin-left: 40%;

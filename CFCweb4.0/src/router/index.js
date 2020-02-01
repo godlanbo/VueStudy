@@ -31,6 +31,12 @@ const constantRoutes = [
     ]
   },
   {
+    path: '/login',
+    component: () => import('@/views/login/index'),
+    hidden: true,
+    name: 'Login'
+  },
+  {
     path: '/admin',
     component: layoutAdmin,
     redirect: '/admin/dashboard',
