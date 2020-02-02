@@ -11,5 +11,5 @@ module.exports = {
   DATA_PATH,
   PRIVATE_KEY: 'cfc2013114',
   SALT_VALUE: 'godlanbo',
-  JWT_EXPIRED: 60 * 60 * 24
+  JWT_EXPIRED: 60
 }
