@@ -9,6 +9,7 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import '@/styles/index.scss' // global css
 import '@/icons' // icon
+import './permission'
 
 Vue.component(VeMap.name, VeMap)
 Vue.use(ElementUI)

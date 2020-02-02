@@ -1,6 +1,7 @@
 import axios from 'axios'
+import store from '@/store'
 import { getToken } from '@/utils/auth'
-// import { MessageBox, Message } from 'element-ui'
+import { Message, MessageBox } from 'element-ui'
 
 // create an axios instance
 const service = axios.create({
@@ -18,6 +19,7 @@ service.interceptors.request.use(
   },
   error => {
     // do something with request error
+    Message.error(error.message)
     console.log(error) // for debug
     return Promise.reject(error)
   }
@@ -26,9 +28,47 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
   response => {
-    return response
+    // console.log(response)
+    const res = response.data
+    if (res.code !== 0) {
+      Message({
+        message: res.message || '请求失败',
+        type: 'error',
+        duration: 5 * 1000
+      })
+
+      if (res.message === 'jwt expired') {
+        // to re-login
+        MessageBox.alert('登录超时，请再次登录', '提示', {
+          confirmButtonText: '确定',
+          type: 'warning'
+        }).then(() => {
+          store.dispatch('app/resetToken').then(() => {
+            // location.reload()
+            // router.push('/login')
+          })
+        })
+      }
+      return Promise.reject(new Error(res.message || 'Error'))
+    } else {
+      return response
+    }
   },
   error => {
+    const { response } = error
+    const res = response.data
+    if (res.message === 'jwt expired') {
+      MessageBox.alert('登录超时，请再次登录', '提示', {
+        confirmButtonText: '确定',
+        type: 'warning'
+      }).then(() => {
+        store.dispatch('app/resetToken').then(() => {
+          // location.reload()
+        })
+      })
+    } else {
+      Message.error(error.message)
+    }
     console.log({ error })
     return Promise.reject(error)
   }

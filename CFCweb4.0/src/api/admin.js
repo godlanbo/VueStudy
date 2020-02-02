@@ -17,3 +17,10 @@ export function login(userInfo) {
     })
   })
 }
+
+export function getRole() {
+  return request({
+    url: '/roleInfo',
+    method: 'get',
+  })
+}

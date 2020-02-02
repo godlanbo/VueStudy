@@ -1,11 +1,13 @@
 import Cookies from 'js-cookie'
-
+import { getRole } from '@/api/admin'
+import { setToken } from '@/utils/auth'
 const state = {
   sidebar: {
     opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
     withoutAnimation: false
   },
-  device: 'desktop'
+  device: 'desktop',
+  role: ''
 }
 
 const mutations = {
@@ -25,6 +27,9 @@ const mutations = {
   },
   TOGGLE_DEVICE: (state, device) => {
     state.device = device
+  },
+  SET_ROLE: (state, role) => {
+    state.role = role
   }
 }
 
@@ -37,6 +42,25 @@ const actions = {
   },
   toggleDevice({ commit }, device) {
     commit('TOGGLE_DEVICE', device)
+  },
+  getRole({ commit }) {
+    return new Promise((resolve, reject) => {
+      getRole().then(response => {
+        const { data } = response.data
+        const role = data.role
+        commit('SET_ROLE', role)
+        resolve(role)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  resetToken({ commit }) {
+    return new Promise(resolve => {
+      commit('SET_ROLE', '')
+      setToken('')
+      resolve()
+    })
   }
 }
 
