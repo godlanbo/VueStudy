@@ -22,14 +22,14 @@ class BaseModel {
 class SuccessModel extends BaseModel {
   constructor (data, message) {
     super(data, message)
-    this.error = CODE_SUCCESS
+    this.code = CODE_SUCCESS
   }
 }
 
 class ErrorModel extends BaseModel {
   constructor (data, message) {
     super(data, message)
-    this.error = CODE_ERROR
+    this.code = CODE_ERROR
   }
 }
 
