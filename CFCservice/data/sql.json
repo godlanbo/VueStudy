@@ -229,7 +229,8 @@
   "admin": [
     {
       "username": "godlanbo",
-      "password": "c94faa35f9af9e428c5ce3fd5e5c4d37"
+      "password": "c94faa35f9af9e428c5ce3fd5e5c4d37",
+      "role": "superAdmin"
     }
   ]
 }
