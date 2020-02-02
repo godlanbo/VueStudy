@@ -88,6 +88,13 @@ export default {
       immediate: true
     }
   },
+  mounted() {
+    const loading = document.querySelector('.loading-wrapper')
+    setTimeout(() => {
+      loading.style.display = 'none'
+    }, 1100)
+    loading.style.opacity = 0
+  },
   methods: {
     showPwd() {
       if (this.passwordType === 'password') {
