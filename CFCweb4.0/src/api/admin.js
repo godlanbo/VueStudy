@@ -24,3 +24,21 @@ export function getRole() {
     method: 'get',
   })
 }
+
+export function getAdminHomeData() {
+  return request({
+    url: '/home/getData',
+    method: 'get'
+  })
+}
+
+export function removeImg({ fileName, activeIndex }) {
+  return request({
+    url: '/removeImg',
+    method: 'get',
+    params: {
+      activeIndex,
+      fileName
+    }
+  })
+}
