@@ -44,7 +44,29 @@ const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '仪表盘', icon: 'dashboard' }
+    }]
+  },
+  {
+    path: '/admin/edit',
+    component: layoutAdmin,
+    redirect: '/admin/edit/home',
+    meta: { title: '首页管理', icon: 'edit' },
+    children: [{
+        path: 'home',
+        name: 'EditHome',
+        component: () => import('@/views/Edit/index'),
+        meta: { title: '编辑首页' }
+    }, {
+        path: 'time-base',
+        name: 'EditTimebase',
+        component: () => import('@/views/Edit/index'),
+        meta: { title: '编辑时间轴' }
+    }, {
+        path: 'team',
+        name: 'EditTeam',
+        component: () => import('@/views/Edit/index'),
+        meta: { title: '编辑团队' }
     }]
   }
 ]
