@@ -1,9 +1,11 @@
 const express = require('express')
 const boom = require('boom')
+const fs = require('fs')
 const router = express.Router()
+const multer = require('multer')
 const { ErrorModel, SuccessModel } = require('../model/resModel')
 const { md5 } = require('../utils/crypto')
-const { SALT_VALUE, PRIVATE_KEY, JWT_EXPIRED } = require('../utils/constant')
+const { SALT_VALUE, PRIVATE_KEY, JWT_EXPIRED, UPLOAD_IMG_PATH } = require('../utils/constant')
 const { login } = require('../services/admin')
 const { getData } = require('../utils/data')
 const jwt = require('jsonwebtoken')
@@ -36,6 +38,42 @@ router.get('/roleInfo', (req, res, next) => {
   }).catch(err => {
     next(boom.badImplementation(err.message))
   })
+})
+// 上传图片信息处理
+const storage = multer.diskStorage({
+  // 文件放置位置
+  destination: function (req, file, cb) {
+    cb(null, `${UPLOAD_IMG_PATH}`)
+  },
+  // 文件名字
+  filename: function (req, file, cb) {
+    const activeIndex = req.body.activeIndex
+    cb(null, `index_${activeIndex}-${file.originalname}`)
+  }
+})
+
+router.post(
+  '/uploadImg',
+  multer({ storage }).single('file'),
+  (req, res, next) => {
+    // console.log(req.file)
+    res.json(new SuccessModel({fileName: req.file.filename}, 'success'))
+  }
+)
+
+router.get('/removeImg', (req, res, next) => {
+  // console.log(req.query)
+  const { fileName, activeIndex } = req.query
+  const imgFileName = `index_${activeIndex}-${fileName}`
+  const filePath = `${UPLOAD_IMG_PATH}/${imgFileName}`
+  try {
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath)
+    }
+    res.json(new SuccessModel('成功移除文件'))
+  } catch(err) {
+    res.json(new ErrorModel('移除文件时出现问题'))
+  }
 })
 
 module.exports = router
