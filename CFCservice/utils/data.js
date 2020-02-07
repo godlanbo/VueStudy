@@ -27,6 +27,21 @@ function insertData(model, tableName) {
   })
 }
 
+function replaceData(model, tableName) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let sqlData = fs.readFileSync(DATA_PATH, 'utf8')
+      sqlData = JSON.parse(sqlData)
+      sqlData[tableName] = model
+      sqlData = JSON.stringify(sqlData, null, 2)
+      fs.writeFileSync(DATA_PATH, sqlData, 'utf8')
+      resolve()
+    } catch(err) {
+      reject(err)
+    }
+  })
+}
+
 function queryData(queryString, tableName) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -44,6 +59,7 @@ function queryData(queryString, tableName) {
 module.exports = {
   getData,
   insertData,
-  queryData
+  queryData,
+  replaceData
 }
 

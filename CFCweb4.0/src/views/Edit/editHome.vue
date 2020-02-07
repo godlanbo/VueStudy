@@ -13,7 +13,6 @@
           <el-upload
             :action="active"
             :headers="header"
-            :data="uploadData"
             :multiple="false"
             :limit="1"
             :file-list="fileList"
@@ -68,7 +67,7 @@
 <script>
 import DetailSwiper from './components/DetailSwiper'
 import waves from '@/components/waves/waves'
-import { getAdminHomeData, getRole, removeImg } from '@/api/admin'
+import { getAdminHomeData, getRole, removeImg, updateHome } from '@/api/admin'
 import { getToken } from '@/utils/auth'
 // import Sticky from '@/components/Sticky'
 export default {
@@ -80,20 +79,33 @@ export default {
   directives: {
     waves
   },
+  props: {
+    isSave: Boolean
+  },
   data() {
     return {
       active: `${process.env.VUE_APP_BASE_URL}/api/uploadImg`,
       fileList: [],
       activeIndex: 0,
-      uploadData: {
-        activeIndex: 0
-      },
       postForm: {
         title: '',
         description: ''
       },
       tempImgUrlArr: [],
       historyInfo: []
+    }
+  },
+  watch: {
+    isSave() {
+      updateHome(this.historyInfo).then(response => {
+        console.log(response)
+        this.fileList = []
+      }).catch(err => {
+        this.$message({
+          type: 'error',
+          message: err.message
+        })
+      })
     }
   },
   computed: {
@@ -103,32 +115,62 @@ export default {
       }
     },
     swiper() {
-      return this.$refs.mySwiper
+      return this.$refs.mySwiper.swiper
     }
   },
   methods: {
     handleDeleteHistory() {
-      console.log('delete')
+      this.$confirm('是否删除此版块?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        const delIndex = this.activeIndex
+        const index = this.activeIndex === this.historyInfo.length - 1 ? this.activeIndex - 1 : this.activeIndex + 1
+        this.swiper.slideTo(index, 1000, true)
+        setTimeout(() => {
+          this.swiper.slideTo(delIndex, 1, true)
+          this.historyInfo.splice(delIndex, 1)
+          this.postForm = this.historyInfo[this.activeIndex]
+        }, 1000)
+        const res = {
+          fileName: this.historyInfo[delIndex].imgUrl
+        }
+        removeImg(res).then(response => {
+          console.log(response)
+        }).catch(err => {
+          this.$message({
+            type: 'error',
+            message: err.message
+          })
+        })
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     },
     handleNewHistory() {
-      console.log('new')
+      let newItem = {
+        imgUrl: `${process.env.VUE_APP_RES_URL}/default.jpg`,
+        title: 'default title',
+        description: 'defautl description'
+      }
+      this.fileList = []
+      this.postForm = newItem
+      this.historyInfo.splice(this.activeIndex + 1, 0, newItem)
+      this.swiper.slideTo(this.activeIndex + 1, 1000, true)
+      console.log(this.activeIndex)
     },
     onSlideChange(activeIndex) {
       this.activeIndex = activeIndex
+      this.fileList = []
       this.postForm = this.historyInfo[activeIndex]
-      // if (this.postForm.imgUrl) {
-      //   const urlArr = this.postForm.imgUrl.split('/')
-      //   // console.log(urlArr.pop())
-      //   this.fileList = []
-      //   setTimeout(() => {
-      //     this.fileList.push({
-      //       name: urlArr.pop(),
-      //       url: this.postForm.imgUrl
-      //     })
-      //   }, 1000)
-      // } else {
-      //   this.fileList = []
-      // }
     },
     onExceed() {
       this.$message({
@@ -152,14 +194,13 @@ export default {
         message: err.message.message
       })
     },
-    onRemove(file) {
+    onRemove() {
       console.log('remove')
       const res = {
-        fileName: file.name,
-        activeIndex: this.activeIndex
+        fileName: this.historyInfo[this.activeIndex].imgUrl
       }
-      removeImg(res).then(response => {
-        console.log(response)
+      removeImg(res).then(() => {
+        // console.log(response)
       }).catch(err => {
         this.$message({
           type: 'error',
@@ -170,7 +211,7 @@ export default {
       this.historyInfo[this.activeIndex].imgUrl = this.tempImgUrlArr[this.activeIndex]
     },
     beforeUpload(file) {
-      this.uploadData.activeIndex = this.activeIndex
+      // this.uploadData.activeIndex = this.activeIndex
       console.log(file)
       const fileType = file.type
       if (!getToken()) {

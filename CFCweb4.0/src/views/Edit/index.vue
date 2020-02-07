@@ -6,7 +6,7 @@
         @click="submitForm"
       >提交修改</el-button>
     </sticky>
-    <component :is="currentComponent"></component>
+    <component :is="currentComponent" :isSave="isSave"></component>
   </div>
 </template>
 <script>
@@ -22,6 +22,11 @@ export default {
     EditTeam,
     EditTimebase
   },
+  data() {
+    return {
+      isSave: false
+    }
+  },
   computed: {
     currentComponent() {
       return this.$route.name
@@ -30,6 +35,7 @@ export default {
   methods: {
     submitForm() {
       console.log('success')
+      this.isSave = !this.isSave
       this.$notify({
         type: 'success',
         message: '提交修改成功',

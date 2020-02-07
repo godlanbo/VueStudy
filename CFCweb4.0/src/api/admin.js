@@ -32,13 +32,20 @@ export function getAdminHomeData() {
   })
 }
 
-export function removeImg({ fileName, activeIndex }) {
+export function removeImg({ fileName }) {
   return request({
     url: '/removeImg',
     method: 'get',
     params: {
-      activeIndex,
       fileName
     }
+  })
+}
+
+export function updateHome(homeInfo) {
+  return request({
+    url: '/updateHome',
+    method: 'post',
+    data: homeInfo
   })
 }

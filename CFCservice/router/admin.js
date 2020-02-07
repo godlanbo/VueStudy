@@ -7,7 +7,7 @@ const { ErrorModel, SuccessModel } = require('../model/resModel')
 const { md5 } = require('../utils/crypto')
 const { SALT_VALUE, PRIVATE_KEY, JWT_EXPIRED, UPLOAD_IMG_PATH } = require('../utils/constant')
 const { login } = require('../services/admin')
-const { getData } = require('../utils/data')
+const { getData, replaceData } = require('../utils/data')
 const jwt = require('jsonwebtoken')
 
 
@@ -47,8 +47,8 @@ const storage = multer.diskStorage({
   },
   // 文件名字
   filename: function (req, file, cb) {
-    const activeIndex = req.body.activeIndex
-    cb(null, `index_${activeIndex}-${file.originalname}`)
+    const suffix = file.mimetype.split('/').pop()
+    cb(null, `img-${Date.now()}.${suffix}`)
   }
 })
 
@@ -63,9 +63,10 @@ router.post(
 
 router.get('/removeImg', (req, res, next) => {
   // console.log(req.query)
-  const { fileName, activeIndex } = req.query
-  const imgFileName = `index_${activeIndex}-${fileName}`
-  const filePath = `${UPLOAD_IMG_PATH}/${imgFileName}`
+  const { fileName } = req.query
+  const suffix = fileName.split('/').pop()
+  const filePath = `${UPLOAD_IMG_PATH}/${suffix}`
+  console.log(filePath)
   try {
     if (fs.existsSync(filePath)) {
       fs.unlinkSync(filePath)
@@ -73,6 +74,29 @@ router.get('/removeImg', (req, res, next) => {
     res.json(new SuccessModel('成功移除文件'))
   } catch(err) {
     res.json(new ErrorModel('移除文件时出现问题'))
+  }
+})
+
+router.post('/updateHome', async (req, res, next) => {
+  try {
+    const historyInfo = await getData('homeTimebase')
+    const homeInfo = req.body
+    await replaceData(homeInfo, 'homeTimebase')
+    homeInfo.forEach((item, index) => {
+      if (index >= historyInfo.length) {
+        return
+      }
+      if (item.imgUrl !== historyInfo[index].imgUrl && historyInfo[index].imgUrl.split('/').pop() !== 'default.jpg') {
+        const imgFile = historyInfo[index].imgUrl.split('/').pop()
+        const imgFilePath = `${UPLOAD_IMG_PATH}/${imgFile}`
+        if (fs.existsSync(imgFilePath)) {
+          fs.unlinkSync(imgFilePath)
+        }
+      }
+    })
+    res.json(new SuccessModel('成功提交首页的修改'))
+  } catch(err) {
+    res.json(new ErrorModel(err.message))
   }
 })
 
