@@ -2,6 +2,7 @@
   <div>
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
+        ref="sidebarMenu"
         :default-active="activeMenu"
         :collapse="isCollapse"
         :background-color="variables.menuBg"
@@ -9,6 +10,7 @@
         :unique-opened="false"
         :active-text-color="variables.menuActiveText"
         :collapse-transition="false"
+        @select="handleSelect"
         mode="vertical"
       >
         <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path" />
@@ -24,6 +26,11 @@ import variables from '@/styles/variables.scss'
 
 export default {
   components: { SidebarItem },
+  data() {
+    return {
+      activeIndex: this.$route.path
+    }
+  },
   computed: {
     ...mapGetters([
       'sidebar'
@@ -45,6 +52,11 @@ export default {
     },
     isCollapse() {
       return !this.sidebar.opened
+    }
+  },
+  methods: {
+    handleSelect() {
+      this.$refs.sidebarMenu.activeIndex = this.$route.path
     }
   }
 }
