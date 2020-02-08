@@ -6,7 +6,7 @@
         @click="submitForm"
       >提交修改</el-button>
     </sticky>
-    <component :is="currentComponent" :isSave="isSave"></component>
+    <component :is="currentComponent" :isSave="isSave" :shouldSave="shouldSave"></component>
   </div>
 </template>
 <script>
@@ -24,7 +24,8 @@ export default {
   },
   data() {
     return {
-      isSave: false
+      isSave: false,
+      shouldSave: false
     }
   },
   computed: {
@@ -41,6 +42,22 @@ export default {
         message: '提交修改成功',
         title: '成功'
       })
+    }
+  },
+  beforeRouteLeave (to, from, next) {
+    const path = from.path.split('/')[2]
+    if (path === 'edit') {
+      this.$confirm('我们不会保留你在本页的任何改动，确认离开？', '提示', {
+        confirmButtonText: '确定离开',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        next()
+      }).catch(() => {
+        next(false)
+      })
+    } else {
+      next()
     }
   }
 }

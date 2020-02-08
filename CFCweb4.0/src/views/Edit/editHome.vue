@@ -80,7 +80,8 @@ export default {
     waves
   },
   props: {
-    isSave: Boolean
+    isSave: Boolean,
+    shouldSave: Boolean
   },
   data() {
     return {
@@ -97,8 +98,8 @@ export default {
   },
   watch: {
     isSave() {
-      updateHome(this.historyInfo).then(response => {
-        console.log(response)
+      updateHome(this.historyInfo).then(() => {
+        // console.log(response)
         this.fileList = []
       }).catch(err => {
         this.$message({
@@ -133,17 +134,6 @@ export default {
           this.historyInfo.splice(delIndex, 1)
           this.postForm = this.historyInfo[this.activeIndex]
         }, 1000)
-        const res = {
-          fileName: this.historyInfo[delIndex].imgUrl
-        }
-        removeImg(res).then(response => {
-          console.log(response)
-        }).catch(err => {
-          this.$message({
-            type: 'error',
-            message: err.message
-          })
-        })
         this.$message({
           type: 'success',
           message: '删除成功!'
@@ -165,7 +155,6 @@ export default {
       this.postForm = newItem
       this.historyInfo.splice(this.activeIndex + 1, 0, newItem)
       this.swiper.slideTo(this.activeIndex + 1, 1000, true)
-      console.log(this.activeIndex)
     },
     onSlideChange(activeIndex) {
       this.activeIndex = activeIndex
@@ -179,7 +168,6 @@ export default {
       })
     },
     onSuccess(response, file) {
-      console.log(response)
       const data = response.data
       this.historyInfo[this.activeIndex].imgUrl = `${process.env.VUE_APP_RES_URL}/${data.fileName}`
       this.fileList.push(file)
@@ -195,7 +183,6 @@ export default {
       })
     },
     onRemove() {
-      console.log('remove')
       const res = {
         fileName: this.historyInfo[this.activeIndex].imgUrl
       }
@@ -212,7 +199,6 @@ export default {
     },
     beforeUpload(file) {
       // this.uploadData.activeIndex = this.activeIndex
-      console.log(file)
       const fileType = file.type
       if (!getToken()) {
         getRole().then(() => {}).catch(() => {})
@@ -235,12 +221,6 @@ export default {
       this.historyInfo.forEach((item, index) => {
         this.tempImgUrlArr[index] = item.imgUrl
       })
-      // const urlArr = this.postForm.imgUrl.split('/')
-      // // console.log(urlArr.pop())
-      // this.fileList.push({
-      //   name: urlArr.pop(),
-      //   url: this.postForm.imgUrl
-      // })
     }).catch(err => {
       console.log({ err })
       this.$message({
