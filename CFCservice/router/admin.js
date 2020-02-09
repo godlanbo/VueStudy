@@ -51,21 +51,48 @@ const storage = multer.diskStorage({
     cb(null, `img-${Date.now()}.${suffix}`)
   }
 })
+// studio上传图片处理
+const StuioStorage = multer.diskStorage({
+  // 文件放置位置
+  destination: function (req, file, cb) {
+    cb(null, `${UPLOAD_IMG_PATH}/studioImg`)
+  },
+  // 文件名字
+  filename: function (req, file, cb) {
+    const suffix = file.mimetype.split('/').pop()
+    cb(null, `studioImg-${Date.now()}.${suffix}`)
+  }
+})
 
+// 上传图片
 router.post(
   '/uploadImg',
   multer({ storage }).single('file'),
   (req, res, next) => {
-    // console.log(req.file)
     res.json(new SuccessModel({fileName: req.file.filename}, 'success'))
   }
 )
-
+// 上传瀑布流图片
+router.post(
+  '/uploadStudioImg',
+  multer({ storage: StuioStorage }).single('file'),
+  (req, res, next) => {
+    res.json(new SuccessModel({fileName: req.file.filename}, 'success'))
+  }
+)
+// 当移除上传的预览图片时，删除本地文件
 router.get('/removeImg', (req, res, next) => {
   // console.log(req.query)
   const { fileName } = req.query
-  const suffix = fileName.split('/').pop()
-  const filePath = `${UPLOAD_IMG_PATH}/${suffix}`
+  const file = fileName.split('/').pop()
+  const type = file.split('-')[0]
+  let filePath
+  if (type === 'img') {
+    filePath = `${UPLOAD_IMG_PATH}/${file}`
+  } else if (type === 'studioImg') {
+    filePath = `${UPLOAD_IMG_PATH}/studioImg/${file}`
+  }
+  
   // console.log(filePath)
   try {
     if (fs.existsSync(filePath)) {
@@ -76,7 +103,7 @@ router.get('/removeImg', (req, res, next) => {
     res.json(new ErrorModel('移除文件时出现问题'))
   }
 })
-
+// 更新home页面的更改api
 router.post('/updateHome', async (req, res, next) => {
   try {
     const historyInfo = await getData('homeTimebase')
