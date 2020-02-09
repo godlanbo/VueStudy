@@ -61,6 +61,7 @@ export default {
 
   .app-wrapper {
     @include clearfix;
+    min-width: 1518px;
     position: relative;
     height: 100%;
     width: 100%;
