@@ -97,9 +97,10 @@ export default {
       height: 500px;
       .vueWaterfallEasy-content-wrapper {
         height: 500px;
-        width: 631px;
+        // width: 631px;
+        width: calc(100% + 18px);
         margin: 0 auto;
-        padding-right: 4px;
+        // padding-right: 4px;
       }
     }
   }
