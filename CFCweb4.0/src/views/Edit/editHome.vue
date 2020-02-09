@@ -1,7 +1,7 @@
 <template>
   <div class="editHome-container">
     <el-divider content-position="left">History</el-divider>
-    <div class="history-edit-content">
+    <div class="history edit-content">
       <div class="content-left-wrapper">
         <detail-swiper
           ref="mySwiper"
@@ -61,6 +61,50 @@
         </div>
       </div>
     </div>
+    <el-divider content-position="left">Studio</el-divider>
+    <div class="studio edit-content">
+      <div class="content-left-wrapper">
+        <div class="vueWaterfallEasy-wrapper">
+          <div class="vueWaterfallEasy-content-wrapper">
+            <vue-waterfall-easy
+              ref="waterfall"
+              @scrollReachBottom="cancelGetData"
+              :linkRange="'img'"
+              :imgsArr="studioInfo"
+              :maxCols="3"
+              :imgWidth="190"
+              :gap="5"
+            >
+              <template class="img-info" v-slot="props">
+                <div class="button-wrapper">
+                  <el-button type="danger" size="mini" @click="handleDeleteStudioImg(props.index)">删除</el-button>
+                </div>
+              </template>
+            </vue-waterfall-easy>
+          </div>
+        </div>
+      </div>
+      <div class="content-right-wrapper">
+        <div class="upload-wrapper">
+          <el-upload
+            :action="activeStudio"
+            :headers="header"
+            :file-list="studioFileList"
+            :before-upload="beforeUpload"
+            :on-success="onStudioSuccess"
+            :on-error="onError"
+            :on-remove="onStudioRemove"
+            show-file-list
+            drag
+          >
+            <i class="el-icon-upload" />
+            <div class="el-upload__text">
+              请将图片拖入或 <em>点击上传</em>
+            </div>
+          </el-upload>
+        </div>
+      </div>
+    </div>
     <div style="height: 800px"></div>
   </div>
 </template>
@@ -69,44 +113,52 @@ import DetailSwiper from './components/DetailSwiper'
 import waves from '@/components/waves/waves'
 import { getAdminHomeData, getRole, removeImg, updateHome } from '@/api/admin'
 import { getToken } from '@/utils/auth'
+import vueWaterfallEasy from 'vue-waterfall-easy'
 // import Sticky from '@/components/Sticky'
 export default {
   name: 'EditHome',
   components: {
-    DetailSwiper
+    DetailSwiper,
+    vueWaterfallEasy
     // Sticky
   },
   directives: {
     waves
   },
   props: {
-    isSave: Boolean,
     shouldSave: Boolean
   },
   data() {
     return {
       active: `${process.env.VUE_APP_BASE_URL}/api/uploadImg`,
+      activeStudio: `${process.env.VUE_APP_BASE_URL}/api/uploadStudioImg`,
       fileList: [],
+      studioFileList: [],
       activeIndex: 0,
       postForm: {
         title: '',
         description: ''
       },
       tempImgUrlArr: [],
-      historyInfo: []
+      historyInfo: [],
+      studioInfo: []
     }
   },
   watch: {
-    isSave() {
-      updateHome(this.historyInfo).then(() => {
-        // console.log(response)
-        this.fileList = []
-      }).catch(err => {
-        this.$message({
-          type: 'error',
-          message: err.message
-        })
-      })
+    historyInfo: {
+      handler(newValue, oldValue) {
+        if (oldValue.length !== 0) {
+          this.$emit('change')
+        }
+      },
+      deep: true
+    },
+    studioInfo: {
+      handler(newValue, oldValue) {
+        if (oldValue.length !== 0) {
+          this.$emit('change')
+        }
+      }
     }
   },
   computed: {
@@ -120,6 +172,28 @@ export default {
     }
   },
   methods: {
+    // 删除studio图片瀑布流中的图片
+    handleDeleteStudioImg(inedx) {
+      console.log(inedx)
+      this.studioInfo.splice(inedx, 1)
+    },
+    // 取消瀑布图片的滚动到底加载
+    cancelGetData() {
+       this.$refs.waterfall.waterfallOver()
+    },
+    // 提交页面修改的方法，用给父组件调用
+    update() {
+      updateHome(this.historyInfo).then(() => {
+        this.$emit('successUpdate')
+        this.fileList = []
+      }).catch(err => {
+        this.$message({
+          type: 'error',
+          message: err.message
+        })
+      })
+    },
+    // 删除一个timebase板块
     handleDeleteHistory() {
       this.$confirm('是否删除此版块?', '提示', {
         confirmButtonText: '确定',
@@ -145,6 +219,7 @@ export default {
         })
       })
     },
+    // 新增一个timebase板块
     handleNewHistory() {
       let newItem = {
         imgUrl: `${process.env.VUE_APP_RES_URL}/default.jpg`,
@@ -156,6 +231,7 @@ export default {
       this.historyInfo.splice(this.activeIndex + 1, 0, newItem)
       this.swiper.slideTo(this.activeIndex + 1, 1000, true)
     },
+    // 当用户滑动展示板块的时候，修改展示的信息，对应激活的展示板块
     onSlideChange(activeIndex) {
       this.activeIndex = activeIndex
       this.fileList = []
@@ -166,6 +242,15 @@ export default {
         type: 'warning',
         message: '只能上传一张图片'
       })
+    },
+    onStudioSuccess(response, file) {
+      const data = response.data
+      const newItem = {
+        src: `${process.env.VUE_APP_RES_URL}/studioImg/${data.fileName}`,
+        href: `${process.env.VUE_APP_RES_URL}/studioImg/${data.fileName}`
+      }
+      this.studioFileList.push(file)
+      this.studioInfo.push(newItem)
     },
     onSuccess(response, file) {
       const data = response.data
@@ -180,6 +265,28 @@ export default {
       this.$message({
         type: 'error',
         message: err.message.message
+      })
+    },
+    onStudioRemove(file) {
+      const { response: { data: { fileName } } } = file
+      let delIndex = this.studioFileList.findIndex(item => {
+        return item.response.data.fileName === fileName
+      })
+      this.studioFileList.splice(delIndex, 1)
+      delIndex = this.studioInfo.findIndex(item => {
+        return item.src === fileName
+      })
+      this.studioInfo.splice(delIndex, 1)
+      const res = {
+        fileName
+      }
+      removeImg(res).then(() => {
+        // console.log(response)
+      }).catch(err => {
+        this.$message({
+          type: 'error',
+          message: err.message
+        })
       })
     },
     onRemove() {
@@ -215,8 +322,11 @@ export default {
   },
   created() {
     getAdminHomeData().then(response => {
+      // 获取后台信息
       const data = response.data.data
       this.historyInfo = data.timebase
+      this.studioInfo = data.imgs
+      // 以下为数据的一些提前处理
       this.postForm = this.historyInfo[0]
       this.historyInfo.forEach((item, index) => {
         this.tempImgUrlArr[index] = item.imgUrl
@@ -241,19 +351,24 @@ export default {
       font-size: 36px;
     }
   }
-  .history-edit-content {
+  .edit-content {
+    margin-bottom: 60px;
     position: relative;
     display: flex;
     top: 25px;
     .content-left-wrapper {
       vertical-align: top;
-      height: 600px;
       width: 40%;
+      // height: 600px;
     }
     .content-right-wrapper {
       vertical-align: top;
-      height: 600px;
       width: 60%;
+      // height: 600px;
+    }
+  }
+  .history {
+    .content-right-wrapper {
       .upload-wrapper {
         position: relative;
         top: 15px;
@@ -276,9 +391,56 @@ export default {
       }
     }
   }
+  .studio {
+    .content-right-wrapper {
+      width: 51.8%;
+      .upload-wrapper {
+        padding-right: 10%;
+        padding-left: 5%;
+        position: relative;
+        top: 13px;
+        div {
+          height: 513.25px;
+          overflow: hidden;
+          /deep/ .el-upload-list {
+            height: 310px;
+            overflow-y: scroll;
+            width: calc(100% + 18px);
+          }
+        }
+      }
+    }
+    .content-left-wrapper {
+      width: 48.2%;
+      padding-top: 1%;
+      padding-left: 3%;
+      .vueWaterfallEasy-wrapper {
+        overflow: hidden;
+        border-radius: 16px;
+        box-shadow: 0 2px 12px 0 rgba(0,0,0,.1),
+        2px 0 12px 0 rgba(0,0,0,.1),-2px 0 12px 0 rgba(0,0,0,.1),
+        0 -2px 12px 0 rgba(0,0,0,.1);
+        position: relative;
+        height: 500px;
+        .vueWaterfallEasy-content-wrapper {
+          height: 500px;
+          width: 107%;
+          margin: 0 auto;
+          .button-wrapper {
+            padding: 10px 0;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
 }
 </style>
 <style lang="scss">
+.vue-waterfall-easy {
+  /* left: 47% !important; */
+  margin-left: -305px !important;
+}
 .el-upload {
   display: block;
   .el-upload-dragger {
