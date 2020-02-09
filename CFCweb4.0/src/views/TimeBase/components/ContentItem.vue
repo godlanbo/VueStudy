@@ -8,13 +8,31 @@
         </div>
         <div class="item-content-wrapper">
           <div class="item-content">
-            <div v-for="(item, index) in itemInfo.detailInfo" :key="index" class="content-detail">
+            <!-- <div v-for="(item, index) in itemInfo.detailInfo" :key="index" class="content-detail">
               <div class="detail-title">{{item.title}}</div>
               <div class="detail-content">
                 <img v-if="isHaveImg" :src="item.imgUrl">
                 {{item.content}}
               </div>
-            </div>
+            </div> -->
+            <el-timeline>
+              <el-timeline-item
+                class="content-detail"
+                v-for="(item, index) in itemInfo.detailInfo"
+                :key="index"
+                :timestamp="item.title"
+                type="primary"
+                icon="el-icon-date"
+                size="large"
+                placement="top">
+                <el-card>
+                  <div class="detail-content">
+                    <img v-if="isHaveImg(item)" :src="item.imgUrl">
+                    {{item.content}}
+                  </div>
+                </el-card>
+              </el-timeline-item>
+            </el-timeline>
           </div>
         </div>
         <div class="item-bottom"></div>
@@ -75,7 +93,7 @@ export default {
         flex: 0 1 auto;
         margin: 0 1%;
         flex-basis: 48%;
-        // box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+        box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
         box-shadow: 0 2px 12px 0 rgba(0,0,0,.1),
         2px 0 12px 0 rgba(0,0,0,.1),-2px 0 12px 0 rgba(0,0,0,.1),
         0 -2px 12px 0 rgba(0,0,0,.1);
@@ -89,28 +107,20 @@ export default {
         height: 532px;
         overflow-y: scroll;
         width: 100%;
+        .el-timeline {
+          padding-top: 20px;
+          padding-inline-start: 0;
+        }
         .content-detail {
-          margin: 10px 0;
-          box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 15px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(46, 70, 145, 0.5) 0px 2px 0px 0px inset;
-          border-radius: 15px;
-          padding: 10px;
           font: {
             size: 20px;
             family: "Google Sans",Arial,Helvetica,sans-serif;
             weight: 400;
           }
-          .detail-title {
-            vertical-align: middle;
-            font-weight: 900;
-            font-size: 34px;
-            line-height: 34px;
-            width: 29%;
-            display: inline-block;
-          }
           .detail-content {
-            vertical-align: middle;
+            // vertical-align: top;
             text-align: left;
-            width: 70%;
+            width: 100%;
             display: inline-block;
             img {
               width: 100%;
@@ -127,5 +137,25 @@ export default {
       }
     }
   }
+}
+</style>
+<style lang="scss">
+.content-detail {
+  .el-timeline-item__node {
+    height: 24px;
+    width: 24px;
+    left: -7px;
+    top: -4px;
+    background-color: white;
+    .el-timeline-item__icon {
+      // color: #909399; // info
+      color: #409EFF;
+      font-size: 24px;
+    }
+  }
+}
+.el-timeline-item__timestamp {
+  font-size: 18px;
+  text-align: left;
 }
 </style>
