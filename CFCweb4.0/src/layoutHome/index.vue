@@ -57,6 +57,7 @@ export default {
     justify-content: flex-start;
     padding: 25px;
     padding-top: 50px;
+    margin-bottom: 55px;
     height: 100px;
     .logo {
       width: 50%;
