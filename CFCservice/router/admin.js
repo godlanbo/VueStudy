@@ -107,20 +107,42 @@ router.get('/removeImg', (req, res, next) => {
 router.post('/updateHome', async (req, res, next) => {
   try {
     const historyInfo = await getData('homeTimebase')
-    const homeInfo = req.body
-    await replaceData(homeInfo, 'homeTimebase')
+    const studioInfo = await getData('homeImgs')
+
+    const newHistoryInfo = req.body.historyInfo
+    const newStudioInfo = req.body.studioInfo
+
+    await replaceData(newHistoryInfo, 'homeTimebase')
+    await replaceData(newStudioInfo, 'homeImgs')
+
     const historyInfoImg = []
-    const homeInfoImg = []
+    const newHistoryInfoImg = []
+    const studioInfoImg = []
+    const newStudioInfoImg = []
+    
+    studioInfo.forEach(item => {
+      studioInfoImg.push(item.src.split('/').pop())
+    })
+    newStudioInfo.forEach(item => {
+      newStudioInfoImg.push(item.src.split('/').pop())
+    })
     historyInfo.forEach(item => {
       historyInfoImg.push(item.imgUrl.split('/').pop())
     })
-    homeInfo.forEach(item => {
-      homeInfoImg.push(item.imgUrl.split('/').pop())
+    newHistoryInfo.forEach(item => {
+      newHistoryInfoImg.push(item.imgUrl.split('/').pop())
     })
-    console.log('homeInfoImg', homeInfoImg)
-    console.log('historyInfoImg', historyInfoImg)
+
+    studioInfoImg.forEach(item => {
+      if (!newStudioInfoImg.includes(item)) {
+        const imgFilePath = `${UPLOAD_IMG_PATH}/studioImg/${item}`
+        if (fs.existsSync(imgFilePath)) {
+          fs.unlinkSync(imgFilePath)
+        }
+      }
+    })
     historyInfoImg.forEach(item => {
-      if (!homeInfoImg.includes(item) && item !== 'default.jpg') {
+      if (!newHistoryInfoImg.includes(item) && item !== 'default.jpg') {
         const imgFilePath = `${UPLOAD_IMG_PATH}/${item}`
         if (fs.existsSync(imgFilePath)) {
           fs.unlinkSync(imgFilePath)
