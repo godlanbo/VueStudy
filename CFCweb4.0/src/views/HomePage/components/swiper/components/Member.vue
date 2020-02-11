@@ -27,26 +27,14 @@ export default {
   data() {
     return {
       imgStyle: {
-        "background-image": `url(${this.memberInfo.imgUrl})`
+        // "background-image": `url(${this.memberInfo.imgUrl})`
+        "background-image": `url(http://localhost:8090/img-1581239175760.jpeg)`
       }
     }
   }
 }
 </script>
-<style scoped>
-.member .img {
-  position: relative;
-  display: inline-block;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  opacity: 1;
-  margin: 0 auto;
-  border-radius: 15px;
-  background-color: #f1f1f1;
-  height: 325px;
-  width: 150px;
-}
+<style lang="scss" scoped>
 .member {
   position: relative;
   display: inline-block;
@@ -54,8 +42,30 @@ export default {
   white-space: normal;
   vertical-align: top;
   text-align: center;
+  .img {
+    position: relative;
+    display: inline-block;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 1;
+    margin: 0 auto;
+    border-radius: 50%;
+    background-color: #f1f1f1;
+    height: 150px;
+    width: 150px;
+  }
 }
-.info h3 {
-  margin-bottom: 10px;
+.info {
+  padding: 2% 5%;
+  h3 {
+    margin-block-start: 0;
+    margin-bottom: 10px;
+  }
+  p {
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: 300;
+  }
 }
 </style>
