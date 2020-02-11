@@ -77,7 +77,11 @@
             >
               <template class="img-info" v-slot="props">
                 <div class="button-wrapper">
-                  <el-button type="danger" size="mini" @click="handleDeleteStudioImg(props.index)">删除</el-button>
+                  <el-button
+                    type="danger"
+                    size="mini"
+                    @click="handleDeleteStudioImg(props.index, props.value)"
+                  >删除</el-button>
                 </div>
               </template>
             </vue-waterfall-easy>
@@ -155,7 +159,12 @@ export default {
     },
     studioInfo: {
       handler(newValue, oldValue) {
-        if (oldValue.length !== 0) {
+        // watch由于后续检测的是同一个数组，导致返回的newValue和oldValue是一样的
+        // 不能如预期那样检测oldValue长度来触发change事件，否则会出现删除最后一个
+        // 图片的时候无法触发change事件，这时可以用newValue和oldValue长度是否一致
+        // 来判断是否是第一次进入，第一次进入时前后studioInfo指向不同的数组，返回的
+        // 长度不一致，不会触发change事件
+        if (oldValue.length === newValue.length) {
           this.$emit('change')
         }
       }
@@ -173,9 +182,16 @@ export default {
   },
   methods: {
     // 删除studio图片瀑布流中的图片
-    handleDeleteStudioImg(inedx) {
-      console.log(inedx)
-      this.studioInfo.splice(inedx, 1)
+    handleDeleteStudioImg(index, value) {
+      const fileName = value.src.split('/').pop()
+      const delIndex = this.studioFileList.findIndex(item => {
+        return item.response.data.fileName === fileName
+      })
+      if (delIndex !== -1) {
+        this.onStudioRemove(this.studioFileList[delIndex])
+      } else {
+        this.studioInfo.splice(index, 1)
+      }
     },
     // 取消瀑布图片的滚动到底加载
     cancelGetData() {
@@ -183,9 +199,14 @@ export default {
     },
     // 提交页面修改的方法，用给父组件调用
     update() {
-      updateHome(this.historyInfo).then(() => {
+      const res = {
+        historyInfo: this.historyInfo,
+        studioInfo: this.studioInfo
+      }
+      updateHome(res).then(() => {
         this.$emit('successUpdate')
         this.fileList = []
+        this.studioFileList = []
       }).catch(err => {
         this.$message({
           type: 'error',
