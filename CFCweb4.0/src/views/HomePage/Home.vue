@@ -12,12 +12,7 @@
     <div class="home-swiper-wrapper">
       <div class="teamInfo-wrapper">
         <h3>Our Team</h3>
-        <p>
-          CFC团队成立于2013年1月，是重庆理工大学第一支完全由学生自主创立的计
-          算机实验室。团队最初由三位热爱Web技术，渴望交流的学长组建，经过多年
-          的发展，团队不断壮大，成员们的学习方向也不再局限于Web。CFC已经成为重
-          理工最大的的极客聚居地之一，并创造了多个校史第一。
-        </p>
+        <p>{{text}}</p>
       </div>
       <home-swiper :memberInfo="teamInfo"></home-swiper>
       <divide-line></divide-line>
@@ -44,7 +39,12 @@ export default {
     return {
       historyInfo: [],
       studioInfo: [],
-      teamInfo: []
+      teamInfo: [],
+      text: `多才多艺，特立独行的成员们是 CFC 实验室最宝贵的财
+      富。CFC 给每一位成员充足的资源支撑和广阔的发展空间，这里
+      有来自未来的人工智能大科学家，有魅力四射的音乐人，有沉稳先
+      进的思想者，还有活跃在中国一线互联网厂商的众多技术大佬，以
+      及充满无尽可能的你！`.replace(/\s/g, '')
     }
   },
   created() {

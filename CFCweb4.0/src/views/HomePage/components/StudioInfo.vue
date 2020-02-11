@@ -3,15 +3,7 @@
     <div class="studio-left-content">
       <div class="the-studioInfo">
         <h3>Studio</h3>
-        <p>
-          CFC团队成立于2013年1月，是重庆理工大学第一支完全由学生自主创立的计
-          算机实验室。团队最初由三位热爱Web技术，渴望交流的学长组建，经过多年
-          的发展，团队不断壮大，成员们的学习方向也不再局限于Web。CFC已经成为重
-          理工最大的的极客聚居地之一，并创造了多个校史第一。CFC一直秉承Crazy
-          ForCode的理念，为校内热爱技术、乐于学习的学子提供一个舒适的Coding环
-          境和优秀的交流平台。在这里，遇见志同道合的朋友，交流技术与心得，碰撞思
-          维的火花，成为更好的自己！
-        </p>
+        <p>{{text}}</p>
       </div>
     </div>
     <div class="studio-right-content">
@@ -44,6 +36,14 @@ export default {
   },
   props: {
     imgsArr: Array
+  },
+  data() {
+    return {
+      text: `我们一直秉承 Crazy For Code 的理念，为校内热爱技术、积极进取的
+      学子提供一个舒适的 Coding 环境和高质量的交流平台。在 CFC，你可以找到志
+      同道合的朋友，一起钻研技术，一起学习进步；也可以在每周例行的交流会上与学
+      习方向迥异的小伙伴交流想法，碰撞出伟大的 idea。`.replace(/\s/g, '')
+    }
   },
   methods: {
     cancelGetData() {
@@ -87,6 +87,7 @@ export default {
     width: 50%;
     float: right;
     padding: 10% 5% 15% 0;
+    // padding: 10% 2% 15% 5%;
     .vueWaterfallEasy-wrapper {
       overflow: hidden;
       border-radius: 16px;
