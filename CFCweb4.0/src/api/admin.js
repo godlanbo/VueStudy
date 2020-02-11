@@ -42,10 +42,10 @@ export function removeImg({ fileName }) {
   })
 }
 
-export function updateHome(homeInfo) {
+export function updateHome(res) {
   return request({
     url: '/updateHome',
     method: 'post',
-    data: homeInfo
+    data: res
   })
 }
