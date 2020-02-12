@@ -63,6 +63,18 @@ const StuioStorage = multer.diskStorage({
     cb(null, `studioImg-${Date.now()}.${suffix}`)
   }
 })
+// member上传图片处理
+const memberStorage = multer.diskStorage({
+  // 文件放置位置
+  destination: function (req, file, cb) {
+    cb(null, `${UPLOAD_IMG_PATH}/memberImg`)
+  },
+  // 文件名字
+  filename: function (req, file, cb) {
+    const suffix = file.mimetype.split('/').pop()
+    cb(null, `memberImg-${Date.now()}.${suffix}`)
+  }
+})
 
 // 上传图片
 router.post(
@@ -77,6 +89,15 @@ router.post(
   '/uploadStudioImg',
   multer({ storage: StuioStorage }).single('file'),
   (req, res, next) => {
+    res.json(new SuccessModel({fileName: req.file.filename}, 'success'))
+  }
+)
+// 上传member图片
+router.post(
+  '/uploadMemberImg',
+  multer({ storage: memberStorage }).single('img'),
+  (req, res, next) => {
+    console.log(req.file)
     res.json(new SuccessModel({fileName: req.file.filename}, 'success'))
   }
 )
@@ -119,7 +140,7 @@ router.post('/updateHome', async (req, res, next) => {
     const newHistoryInfoImg = []
     const studioInfoImg = []
     const newStudioInfoImg = []
-    
+
     studioInfo.forEach(item => {
       studioInfoImg.push(item.src.split('/').pop())
     })
