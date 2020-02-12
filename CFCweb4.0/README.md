@@ -34,6 +34,10 @@ home页面第一部分待重新设计
 
 ![edithome3.png](https://i.loli.net/2020/02/12/KgcuZdpG8QRlH6J.png)
 
+编辑部分预览图
+
+![edithome5.png](https://i.loli.net/2020/02/13/rUsoti5lDfm3cwe.png)
+
 编辑部分的上传头像时预览图
 
 ![edithome4.png](https://i.loli.net/2020/02/12/EW3cdys9GoLQYC1.png)
