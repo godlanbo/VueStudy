@@ -1,10 +1,10 @@
 <template>
   <div class="swiper-bar">
-    <swiper :options="swiperOption">
-      <swiper-slide v-for="(page ,index) in pages" :key="index" class="team-wrapper">
+    <swiper :options="swiperOption" ref="mySwiper">
+      <swiper-slide v-for="(page ,index) in pages" :key="index" class="team-wrapper swiper-no-swiping">
         <member
-          @editMember="handleEditMember"
-          @deleteMember="handleDeleteMember"
+          @edit-member="handleEditMember"
+          @delete-member="handleDeleteMember"
           v-for="(item, index) in page"
           :key="index"
           :memberInfo="item"></member>
@@ -46,11 +46,15 @@ export default {
         pages[page].push(item)
       })
       return pages
+    },
+    swiper() {
+      return this.$refs.mySwiper.swiper
     }
   },
   data() {
     return {
       swiperOption: {
+        noSwiping : true,
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev"
@@ -66,10 +70,14 @@ export default {
       return index
     },
     handleEditMember(name) {
-      this.$emit('editMember', this.findActiveIndex(name))
+      // console.log(this.$refs.mySwiper.swiper)
+      this.$emit('edit-member', this.findActiveIndex(name))
     },
     handleDeleteMember(name) {
-      this.$emit('deleteMember', this.findActiveIndex(name))
+      const indexInActivePages = this.pages[this.swiper.activeIndex].findIndex(item => {
+        return item.name === name
+      })
+      this.$emit('delete-member', this.findActiveIndex(name), indexInActivePages)
     }
   }
 }
