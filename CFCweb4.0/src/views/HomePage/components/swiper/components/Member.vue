@@ -3,7 +3,7 @@
     <div class="img" :style="imgStyle"></div>
     <div class="info">
       <h3>{{memberInfo.name}}</h3>
-      <h3>{{memberInfo.designation}}</h3>
+      <h3 style="color: #57d0f9">{{memberInfo.designation}}</h3>
       <p>{{memberInfo.detail}}</p>
     </div>
   </div>
@@ -28,7 +28,7 @@ export default {
     return {
       imgStyle: {
         // "background-image": `url(${this.memberInfo.imgUrl})`
-        "background-image": `url(http://localhost:8090/img-1581239175760.jpeg)`
+        "background-image": `url(${this.memberInfo.imgUrl})`
       }
     }
   }
@@ -50,7 +50,10 @@ export default {
     background-repeat: no-repeat;
     opacity: 1;
     margin: 0 auto;
+    border: 4px solid white;
     border-radius: 50%;
+    box-shadow: inset 0 0 0 5px rgba(0,0,0,.05);
+    box-shadow: 0 1px 3px rgba(0,0,0,.2);
     background-color: #f1f1f1;
     height: 150px;
     width: 150px;

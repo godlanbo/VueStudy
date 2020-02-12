@@ -13,14 +13,14 @@
         round
         icon="el-icon-edit"
         @click="handleEditClick"
-      >编辑</el-button>
+      >编 辑</el-button>
       <el-button
         type="danger"
         size="small"
         round
         icon="el-icon-delete"
         @click="handleDeleteClick"
-      >删除</el-button>
+      >删 除</el-button>
     </div>
   </div>
 </template>
@@ -63,7 +63,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .member {
-  height: 390px;
+  height: 510px;
   position: relative;
   display: inline-block;
   width: 33.33%;
