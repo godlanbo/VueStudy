@@ -80,6 +80,7 @@
                   <el-button
                     type="danger"
                     size="mini"
+                    icon="el-icon-delete"
                     @click="handleDeleteStudioImg(props.index, props.value)"
                   >删除</el-button>
                 </div>
@@ -98,6 +99,7 @@
             :on-success="onStudioSuccess"
             :on-error="onError"
             :on-remove="onStudioRemove"
+            list-type="picture"
             show-file-list
             drag
           >
@@ -109,21 +111,84 @@
         </div>
       </div>
     </div>
-    <div style="height: 800px"></div>
+    <el-divider content-position="left">Our Team</el-divider>
+    <div class="ourTeam edit-content">
+      <team-swiper
+        ref="teamSwiper"
+        :memberInfo="teamInfo"
+        @edit-member="handleEditMember"
+        @delete-member="handleDeleteMember" />
+    </div>
+    <el-dialog
+      title="人物信息编辑"
+      :visible.sync="editMemberDialogVisiable"
+      width="40%"
+    >
+      <div class="dialog-content">
+        <div class="content-left-wrapper">
+          <div class="upload-wrapper">
+            <a class="btn" @click="toggleShow">设置头像</a>
+              <my-upload
+                field="img"
+                @crop-success="cropSuccess"
+                @crop-upload-success="cropUploadSuccess"
+                @crop-upload-fail="cropUploadFail"
+                v-model="show"
+                :width="300"
+                :height="300"
+                :url="activeMember"
+                :headers="header"
+                noSquare
+                img-format="png"></my-upload>
+              <img :src="imgDataUrl">
+            <!-- <el-upload
+              :action="activeMember"
+              :headers="header"
+              :multiple="false"
+              :limit="1"
+              :file-list="fileList"
+              :on-exceed="onExceed"
+              :before-upload="beforeUpload"
+              :on-success="onSuccess"
+              :on-error="onError"
+              :on-remove="onRemove"
+              show-file-list
+              drag
+            >
+              <i class="el-icon-upload" />
+              <div v-if="fileList.length === 0" class="el-upload__text">
+                请将图片拖入或 <em>点击上传</em>
+              </div>
+              <div v-else class="el-upload__text">图片已上传</div>
+            </el-upload> -->
+          </div>
+        </div>
+        <div class="content-right-wrapper"></div>
+      </div>
+      <!-- <span slot="footer" class="dialog-footer">
+        <el-button @click="editMemberDialogVisiable = false">取 消</el-button>
+        <el-button type="primary" @click="editMemberDialogVisiable = false">确 定</el-button>
+      </span> -->
+    </el-dialog>
+    <!-- <div style="height: 800px"></div> -->
   </div>
 </template>
 <script>
 import DetailSwiper from './components/DetailSwiper'
+import TeamSwiper from './components/swiper/Swiper'
 import waves from '@/components/waves/waves'
 import { getAdminHomeData, getRole, removeImg, updateHome } from '@/api/admin'
 import { getToken } from '@/utils/auth'
 import vueWaterfallEasy from 'vue-waterfall-easy'
+import myUpload from 'vue-image-crop-upload';
 // import Sticky from '@/components/Sticky'
 export default {
   name: 'EditHome',
   components: {
     DetailSwiper,
-    vueWaterfallEasy
+    vueWaterfallEasy,
+    TeamSwiper,
+    myUpload
     // Sticky
   },
   directives: {
@@ -136,16 +201,21 @@ export default {
     return {
       active: `${process.env.VUE_APP_BASE_URL}/api/uploadImg`,
       activeStudio: `${process.env.VUE_APP_BASE_URL}/api/uploadStudioImg`,
+      activeMember: `${process.env.VUE_APP_BASE_URL}/api/uploadMemberImg`,
+      imgDataUrl: '',
+      show: false,
       fileList: [],
       studioFileList: [],
       activeIndex: 0,
+      editMemberDialogVisiable: false,
       postForm: {
         title: '',
         description: ''
       },
       tempImgUrlArr: [],
       historyInfo: [],
-      studioInfo: []
+      studioInfo: [],
+      teamInfo: []
     }
   },
   watch: {
@@ -181,6 +251,46 @@ export default {
     }
   },
   methods: {
+    toggleShow() {
+      this.show = true
+    },
+    cropSuccess() {
+
+    },
+    cropUploadSuccess() {
+
+    },
+    cropUploadFail() {
+
+    },
+    handleEditMember(index) {
+      console.log(index)
+      this.editMemberDialogVisiable = true
+      // console.log(this.$refs.teamSwiper)
+      
+    },
+    handleDeleteMember(index, indexInActivePages) {
+      const nodes = document.querySelectorAll('.ourTeam.edit-content .swiper-wrapper > .team-wrapper.swiper-slide.swiper-slide-active > .member')
+      var i = indexInActivePages
+      var flag = setInterval(() => {
+        nodes[i].classList.add('active')
+        i++
+        if (i >= nodes.length) {
+          clearInterval(flag)
+        }
+      }, 200)
+      setTimeout(() => {
+        this.teamInfo.splice(index, 1)
+        var flag = setInterval(() => {
+          i--
+          if (i < 0) {
+            clearInterval(flag)
+            return
+          }
+          nodes[i].classList.remove('active')
+        }, 200)
+      }, 800 - indexInActivePages * 200)
+    },
     // 删除studio图片瀑布流中的图片
     handleDeleteStudioImg(index, value) {
       const fileName = value.src.split('/').pop()
@@ -347,6 +457,14 @@ export default {
       const data = response.data.data
       this.historyInfo = data.timebase
       this.studioInfo = data.imgs
+      this.teamInfo = data.ourTeam
+      const addItem = {
+        imgUrl: 'http://localhost:8090/memberImg/add.png',
+        name: '',
+        designation: '',
+        detail: ''
+      }
+      this.teamInfo.push(addItem)
       // 以下为数据的一些提前处理
       this.postForm = this.historyInfo[0]
       this.historyInfo.forEach((item, index) => {
@@ -426,6 +544,7 @@ export default {
           /deep/ .el-upload-list {
             height: 310px;
             overflow-y: scroll;
+            padding-right: 2px;
             width: calc(100% + 18px);
           }
         }
@@ -452,6 +571,31 @@ export default {
             text-align: center;
           }
         }
+      }
+    }
+  }
+  .ourTeam {
+    top: 70px;
+    // .swiper-container{
+    //   /deep/ .swiper-wrapper {
+    //     .team-wrapper .member {
+    //       color: red;
+    //     }
+    //   }
+    // }
+  }
+  .el-dialog__wrapper {
+    .dialog-content {
+      display: flex;
+      .content-left-wrapper {
+        // display: inline-block;
+        width: 50%;
+        height: 500px;
+      }
+      .content-right-wrapper {
+        // display: inline-block;
+        width: 50%;
+        height: 500px;
       }
     }
   }
