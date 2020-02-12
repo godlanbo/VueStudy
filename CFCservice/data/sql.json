@@ -1,7 +1,7 @@
 {
   "homeTimebase": [
     {
-      "imgUrl": "http://localhost:8090/img-1581094730378.png",
+      "imgUrl": "http://localhost:8090/img-1581153563824.png",
       "title": "2020.1.14",
       "description": "CFC成立第七周年"
     },
@@ -16,90 +16,104 @@
       "description": "试试transition"
     },
     {
-      "imgUrl": "http://localhost:8090/img-1581095025339.png",
-      "title": "2020.1.14",
-      "description": "CFC成立第七周年"
-    },
-    {
       "imgUrl": "http://localhost:8090/default.jpg",
       "title": "2020.1.14",
       "description": "CFC成立第七周年345"
     },
     {
-      "imgUrl": "http://localhost:8090/default.jpg",
+      "imgUrl": "http://localhost:8090/img-1581239175760.jpeg",
       "title": "2020.1.14",
-      "description": "CFC成立第七周年"
+      "description": "CFC成立第七周年5745"
     }
   ],
   "homeImgs": [
     {
-      "src": "http://localhost:8089/img/1.jpg",
-      "href": "http://localhost:8089/img/1.jpg"
+      "src": "http://localhost:8090/studioImg/studioImg-1581406200492.jpeg",
+      "href": "http://localhost:8090/studioImg/studioImg-1581406200492.jpeg",
+      "_height": 143
     },
     {
-      "src": "http://localhost:8089/img/2.jpg",
-      "href": "http://localhost:8089/img/2.jpg"
+      "src": "http://localhost:8090/studioImg/studioImg-1581406203811.jpeg",
+      "href": "http://localhost:8090/studioImg/studioImg-1581406203811.jpeg",
+      "_height": 143
     },
     {
-      "src": "http://localhost:8089/img/3.jpg",
-      "href": "http://localhost:8089/img/3.jpg"
+      "src": "http://localhost:8090/studioImg/studioImg-1581406206497.jpeg",
+      "href": "http://localhost:8090/studioImg/studioImg-1581406206497.jpeg",
+      "_height": 143
     },
     {
-      "src": "http://localhost:8089/img/4.jpg",
-      "href": "http://localhost:8089/img/4.jpg"
+      "src": "http://localhost:8090/studioImg/studioImg-1581406209121.jpeg",
+      "href": "http://localhost:8090/studioImg/studioImg-1581406209121.jpeg",
+      "_height": 143
     },
     {
-      "src": "http://localhost:8089/img/5.jpg",
-      "href": "http://localhost:8089/img/5.jpg"
+      "src": "http://localhost:8090/studioImg/studioImg-1581406211839.jpeg",
+      "href": "http://localhost:8090/studioImg/studioImg-1581406211839.jpeg",
+      "_height": 253
     },
     {
-      "src": "http://localhost:8089/img/6.jpg",
-      "href": "http://localhost:8089/img/6.jpg"
+      "src": "http://localhost:8090/studioImg/studioImg-1581406214290.jpeg",
+      "href": "http://localhost:8090/studioImg/studioImg-1581406214290.jpeg",
+      "_height": 253
     },
     {
-      "src": "http://localhost:8089/img/7.jpg",
-      "href": "http://localhost:8089/img/7.jpg"
+      "src": "http://localhost:8090/studioImg/studioImg-1581406217044.jpeg",
+      "href": "http://localhost:8090/studioImg/studioImg-1581406217044.jpeg",
+      "_height": 253
     },
     {
-      "src": "http://localhost:8089/img/8.jpg",
-      "href": "http://localhost:8089/img/8.jpg"
+      "src": "http://localhost:8090/studioImg/studioImg-1581406220584.jpeg",
+      "href": "http://localhost:8090/studioImg/studioImg-1581406220584.jpeg",
+      "_height": 143
+    },
+    {
+      "src": "http://localhost:8090/studioImg/studioImg-1581410640077.jpeg",
+      "href": "http://localhost:8090/studioImg/studioImg-1581410640077.jpeg",
+      "_height": 143
     }
   ],
   "homeTeam": [
     {
-      "imgUrl": "https://thatgamecompany.com/wp-content/uploads/thatgamecompany-team-jenova.jpg",
-      "name": "jton",
-      "designation": "onsin",
+      "imgUrl": "http://localhost:8090/memberImg/dbg.jpg",
+      "name": "陈斌",
+      "designation": "dbg",
+      "detail": "传说中大名鼎鼎的 ：CFC团队钦定负责人 · Markdown Boy · 人工智能大科学家 · 茶道爱好者 · uwp隐藏开发者 · acm天赋选手 · 一个顶两个 · 拯救重庆算法 · 理工的卡丽熙 · 竹轩女权的解放者 · 花溪全境守护 · 不蠢者 · 肩负未来人类前进使命的微弱 小葱拌豆腐吞噬者大斌哥"
+    },
+    {
+      "imgUrl": "http://localhost:8090/memberImg/康师傅.jpg",
+      "name": "许康灵",
+      "designation": "康师傅",
       "detail": "Video game evangelist, digital monk, contemplates the philosophy of life while eating fried chicken."
     },
     {
-      "imgUrl": "https://thatgamecompany.com/wp-content/uploads/thatgamecompany-team-jenova.jpg",
-      "name": "jton",
-      "designation": "onsin",
+      "imgUrl": "http://localhost:8090/memberImg/丹丹姐.jpg",
+      "name": "jton3",
+      "designation": "丹丹姐",
       "detail": "Video game evangelist, digital monk, contemplates the philosophy of life while eating fried chicken."
     },
     {
-      "imgUrl": "https://thatgamecompany.com/wp-content/uploads/thatgamecompany-team-jenova.jpg",
-      "name": "jton",
-      "designation": "onsin",
+      "imgUrl": "http://localhost:8090/memberImg/图图.jpg",
+      "name": "涂舒舰",
+      "designation": "图书见、图图",
       "detail": "Video game evangelist, digital monk, contemplates the philosophy of life while eating fried chicken."
     },
     {
-      "imgUrl": "https://thatgamecompany.com/wp-content/uploads/thatgamecompany-team-jenova.jpg",
-      "name": "jton",
-      "designation": "onsin",
+      "imgUrl": "http://localhost:8090/memberImg/何老师.jpg",
+      "name": "何清疑",
+      "designation": "何老师，小疑疑",
       "detail": "Video game evangelist, digital monk, contemplates the philosophy of life while eating fried chicken."
     },
     {
-      "imgUrl": "https://thatgamecompany.com/wp-content/uploads/thatgamecompany-team-jenova.jpg",
-      "name": "jton",
-      "designation": "onsin",
+      "imgUrl": "http://localhost:8090/memberImg/涛哥.jpg",
+      "name": "谢锦涛",
+      "designation": "涛哥",
       "detail": "Video game evangelist, digital monk, contemplates the philosophy of life while eating fried chicken."
     },
     {
-      "imgUrl": "https://thatgamecompany.com/wp-content/uploads/thatgamecompany-team-jenova.jpg",
-      "name": "jton",
-      "designation": "onsin",
+      "imgUrl": "http://localhost:8090/memberImg/memberImg-1581509260653.png",
+      "name": "蒋云龙",
+      "designation": "蒋大",
       "detail": "Video game evangelist, digital monk, contemplates the philosophy of life while eating fried chicken."
     }
   ],
@@ -236,6 +250,48 @@
       "username": "godlanbo",
       "password": "c94faa35f9af9e428c5ce3fd5e5c4d37",
       "role": "superAdmin"
+    }
+  ],
+  "hoemImgs": [
+    {
+      "src": "http://localhost:8090/studioImg/studioImg-1581405235650.jpeg",
+      "href": "http://localhost:8090/studioImg/studioImg-1581405235650.jpeg",
+      "_height": 143
+    },
+    {
+      "src": "http://localhost:8090/studioImg/studioImg-1581405238437.jpeg",
+      "href": "http://localhost:8090/studioImg/studioImg-1581405238437.jpeg",
+      "_height": 143
+    },
+    {
+      "src": "http://localhost:8090/studioImg/studioImg-1581405241144.jpeg",
+      "href": "http://localhost:8090/studioImg/studioImg-1581405241144.jpeg",
+      "_height": 143
+    },
+    {
+      "src": "http://localhost:8090/studioImg/studioImg-1581405243707.jpeg",
+      "href": "http://localhost:8090/studioImg/studioImg-1581405243707.jpeg",
+      "_height": 143
+    },
+    {
+      "src": "http://localhost:8090/studioImg/studioImg-1581405246635.jpeg",
+      "href": "http://localhost:8090/studioImg/studioImg-1581405246635.jpeg",
+      "_height": 253
+    },
+    {
+      "src": "http://localhost:8090/studioImg/studioImg-1581405249162.jpeg",
+      "href": "http://localhost:8090/studioImg/studioImg-1581405249162.jpeg",
+      "_height": 253
+    },
+    {
+      "src": "http://localhost:8090/studioImg/studioImg-1581405252161.jpeg",
+      "href": "http://localhost:8090/studioImg/studioImg-1581405252161.jpeg",
+      "_height": 253
+    },
+    {
+      "src": "http://localhost:8090/studioImg/studioImg-1581405255160.jpeg",
+      "href": "http://localhost:8090/studioImg/studioImg-1581405255160.jpeg",
+      "_height": 143
     }
   ]
 }
