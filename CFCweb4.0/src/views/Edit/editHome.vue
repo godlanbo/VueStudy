@@ -127,7 +127,16 @@
       <div class="dialog-content">
         <div class="content-left-wrapper">
           <div class="upload-wrapper">
-            <a class="btn" @click="toggleShow">设置头像</a>
+            <div class="img-wrapper">
+              <img :src="imgDataUrl">
+            </div>
+            <el-button
+              class="upload-btn"
+              type="primary"
+              icon="el-icon-upload"
+              size="medium"
+              @click="toggleShow"
+            >上传头像</el-button>
               <my-upload
                 field="img"
                 @crop-success="cropSuccess"
@@ -139,36 +148,35 @@
                 :url="activeMember"
                 :headers="header"
                 noSquare
-                img-format="png"></my-upload>
-              <img :src="imgDataUrl">
-            <!-- <el-upload
-              :action="activeMember"
-              :headers="header"
-              :multiple="false"
-              :limit="1"
-              :file-list="fileList"
-              :on-exceed="onExceed"
-              :before-upload="beforeUpload"
-              :on-success="onSuccess"
-              :on-error="onError"
-              :on-remove="onRemove"
-              show-file-list
-              drag
-            >
-              <i class="el-icon-upload" />
-              <div v-if="fileList.length === 0" class="el-upload__text">
-                请将图片拖入或 <em>点击上传</em>
-              </div>
-              <div v-else class="el-upload__text">图片已上传</div>
-            </el-upload> -->
+                img-format="png" />
           </div>
         </div>
-        <div class="content-right-wrapper"></div>
+        <div class="content-right-wrapper">
+          <div class="dialog-form-wrapper">
+            <el-form
+              :model="postMemberForm"
+              ref="form"
+              label-suffix=":"
+              label-width="80px"
+              label-position="top"
+            >
+              <el-form-item label="姓名">
+                <el-input v-model="postMemberForm.name"></el-input>
+              </el-form-item>
+              <el-form-item label="外号">
+                <el-input v-model="postMemberForm.designation"></el-input>
+              </el-form-item>
+              <el-form-item label="简介">
+                <el-input type="textarea" resize="none" :rows="4" v-model="postMemberForm.detail"></el-input>
+              </el-form-item>
+            </el-form>
+          </div>
+        </div>
       </div>
-      <!-- <span slot="footer" class="dialog-footer">
+      <template v-slot:footer class="dialog-footer">
         <el-button @click="editMemberDialogVisiable = false">取 消</el-button>
         <el-button type="primary" @click="editMemberDialogVisiable = false">确 定</el-button>
-      </span> -->
+      </template>
     </el-dialog>
     <!-- <div style="height: 800px"></div> -->
   </div>
@@ -204,10 +212,16 @@ export default {
       activeMember: `${process.env.VUE_APP_BASE_URL}/api/uploadMemberImg`,
       imgDataUrl: '',
       show: false,
+      editMemberIndex: 0,
       fileList: [],
       studioFileList: [],
       activeIndex: 0,
       editMemberDialogVisiable: false,
+      postMemberForm: {
+        name: '',
+        designation: '',
+        detail: ''
+      },
       postForm: {
         title: '',
         description: ''
@@ -253,9 +267,10 @@ export default {
   methods: {
     toggleShow() {
       this.show = true
+      this.imgDataUrl = this.teamInfo[this.editMemberIndex].imgUrl
     },
-    cropSuccess() {
-
+    cropSuccess(imgDataUrl) {
+      this.imgDataUrl = imgDataUrl
     },
     cropUploadSuccess() {
 
@@ -264,10 +279,11 @@ export default {
 
     },
     handleEditMember(index) {
-      console.log(index)
+      // this.editMemberIndex = index
+      const editItem = this.teamInfo[index]
+      this.postMemberForm = editItem
+      this.imgDataUrl = editItem.imgUrl
       this.editMemberDialogVisiable = true
-      // console.log(this.$refs.teamSwiper)
-      
     },
     handleDeleteMember(index, indexInActivePages) {
       const nodes = document.querySelectorAll('.ourTeam.edit-content .swiper-wrapper > .team-wrapper.swiper-slide.swiper-slide-active > .member')
@@ -576,26 +592,52 @@ export default {
   }
   .ourTeam {
     top: 70px;
-    // .swiper-container{
-    //   /deep/ .swiper-wrapper {
-    //     .team-wrapper .member {
-    //       color: red;
-    //     }
-    //   }
-    // }
   }
   .el-dialog__wrapper {
+    /deep/ .el-dialog__body {
+      padding-bottom: 0;
+    }
     .dialog-content {
       display: flex;
       .content-left-wrapper {
-        // display: inline-block;
-        width: 50%;
-        height: 500px;
+        width: 40%;
+        .upload-wrapper {
+          .upload-btn {
+            margin: 0 auto;
+            display: block;
+            margin-top: 20%;
+          }
+          .img-wrapper {
+            text-align: center;
+            img {
+              width: 200px;
+              height: 200px;
+              border: 4px solid white;
+              border-radius: 50%;
+              box-shadow: inset 0 0 0 5px rgba(0,0,0,.05);
+              box-shadow: 0 1px 3px rgba(0,0,0,.2);
+            }
+          }
+        }
       }
       .content-right-wrapper {
-        // display: inline-block;
-        width: 50%;
-        height: 500px;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: 60%;
+        .dialog-form-wrapper {
+          position: relative;
+          top: -25px;
+          .el-form-item {
+            margin-bottom: 0;
+            /deep/ .el-form-item__label {
+              padding-bottom: 0;
+            }
+            /deep/ .el-textarea__inner, /deep/ .el-input__inner {
+              font-family: Arial, Helvetica, sans-serif;
+              font-size: 16px;
+            }
+          }
+        }
       }
     }
   }
@@ -616,12 +658,7 @@ export default {
   .el-form-item__label {
     padding-bottom: 0;
   }
-  .el-textarea__inner {
-    font-size: 20px;
-    font-weight: 400;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  .el-input__inner {
+  .el-textarea__inner, .el-input__inner {
     font-size: 20px;
     font-weight: 400;
     font-family: Arial, Helvetica, sans-serif;
