@@ -117,7 +117,8 @@
         ref="teamSwiper"
         :memberInfo="teamInfo"
         @edit-member="handleEditMember"
-        @delete-member="handleDeleteMember" />
+        @delete-member="handleDeleteMember"
+        @add-member="handleAddMember" />
     </div>
     <el-dialog
       title="人物信息编辑"
@@ -174,8 +175,8 @@
         </div>
       </div>
       <template v-slot:footer class="dialog-footer">
+        <el-button type="primary" @click="savePostMemberForm">确 定</el-button>
         <el-button @click="editMemberDialogVisiable = false">取 消</el-button>
-        <el-button type="primary" @click="editMemberDialogVisiable = false">确 定</el-button>
       </template>
     </el-dialog>
     <!-- <div style="height: 800px"></div> -->
@@ -212,7 +213,6 @@ export default {
       activeMember: `${process.env.VUE_APP_BASE_URL}/api/uploadMemberImg`,
       imgDataUrl: '',
       show: false,
-      editMemberIndex: 0,
       fileList: [],
       studioFileList: [],
       activeIndex: 0,
@@ -251,7 +251,16 @@ export default {
         if (oldValue.length === newValue.length) {
           this.$emit('change')
         }
-      }
+      },
+      deep: true
+    },
+    teamInfo: {
+      handler(newValue, oldValue) {
+        if (oldValue.length === newValue.length) {
+          this.$emit('change')
+        }
+      },
+      deep: true
     }
   },
   computed: {
@@ -265,22 +274,50 @@ export default {
     }
   },
   methods: {
+    savePostMemberForm() {
+      // 编辑人物信息框的确认按钮，新增和编辑共用一个确认按钮，如果是编辑，直接关闭
+      // 弹框即可，如果是新增（判断当前teamInfo中是否有此条信息）则在末尾添加这条信息
+      const index = this.teamInfo.findIndex(item => {
+        return item.name === this.postMemberForm.name
+      })
+      if (index === -1) {
+        this.teamInfo.splice(-1, 0, this.postMemberForm)
+      } else {
+        // 确认替换编辑对象
+        this.teamInfo.splice(index, 1, this.postMemberForm)
+      }
+      this.editMemberDialogVisiable = false
+    },
     toggleShow() {
       this.show = true
-      this.imgDataUrl = this.teamInfo[this.editMemberIndex].imgUrl
     },
     cropSuccess(imgDataUrl) {
       this.imgDataUrl = imgDataUrl
     },
-    cropUploadSuccess() {
-
+    cropUploadSuccess(response) {
+      const { data } = response
+      this.postMemberForm.imgUrl = `${process.env.VUE_APP_RES_URL}/memberImg/${data.fileName}`
     },
-    cropUploadFail() {
-
+    cropUploadFail(status) {
+      this.imgDataUrl = this.postMemberForm.imgUrl
+      if (status === 401) {
+        getRole().then(() => {}).catch(() => {})
+        return
+      }
+      this.$message({
+        type: 'error',
+        message: `${status}:图片上传时发生错误`
+      })
+    },
+    handleAddMember() {
+      const newItem = {}
+      this.postMemberForm = newItem
+      this.imgDataUrl = `${process.env.VUE_APP_RES_URL}/memberImg/add.png`
+      this.editMemberDialogVisiable = true
     },
     handleEditMember(index) {
-      // this.editMemberIndex = index
-      const editItem = this.teamInfo[index]
+      // 简单深拷贝编辑对象的属性，让编辑的时候可以取消编辑
+      const editItem = Object.assign({}, this.teamInfo[index])
       this.postMemberForm = editItem
       this.imgDataUrl = editItem.imgUrl
       this.editMemberDialogVisiable = true
@@ -327,7 +364,8 @@ export default {
     update() {
       const res = {
         historyInfo: this.historyInfo,
-        studioInfo: this.studioInfo
+        studioInfo: this.studioInfo,
+        teamInfo: this.teamInfo.slice(0, -1)
       }
       updateHome(res).then(() => {
         this.$emit('successUpdate')
@@ -596,6 +634,9 @@ export default {
   .el-dialog__wrapper {
     /deep/ .el-dialog__body {
       padding-bottom: 0;
+    }
+    /deep/ .el-dialog__footer {
+      padding-right: 30px;
     }
     .dialog-content {
       display: flex;
