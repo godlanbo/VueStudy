@@ -5,6 +5,7 @@
         <member
           @edit-member="handleEditMember"
           @delete-member="handleDeleteMember"
+          @add-member="handleAddMember"
           v-for="(item, index) in page"
           :key="index"
           :memberInfo="item"></member>
@@ -68,6 +69,9 @@ export default {
         return item.name === name
       })
       return index
+    },
+    handleAddMember() {
+      this.$emit('add-member')
     },
     handleEditMember(name) {
       // console.log(this.$refs.mySwiper.swiper)

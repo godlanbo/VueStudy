@@ -1,6 +1,6 @@
 <template>
-  <div class="member">
-    <div class="img" :style="imgStyle"></div>
+  <div :class="['member', { isTool: !isEdit }]">
+    <div class="img" :style="imgStyle" @click="handleToolClick"></div>
     <div class="info">
       <h3>{{memberInfo.name}}</h3>
       <h3 style="color: #57d0f9">{{memberInfo.designation}}</h3>
@@ -52,6 +52,12 @@ export default {
     }
   },
   methods: {
+    handleToolClick() {
+      if (this.isEdit) {
+        return
+      }
+      this.$emit('add-member')
+    },
     handleEditClick() {
       this.$emit('edit-member', this.memberInfo.name)
     },
@@ -62,6 +68,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.isTool {
+  .img {
+    cursor: pointer;
+  }
+}
 .member {
   height: 510px;
   position: relative;
