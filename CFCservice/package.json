@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=dev nodemon ./app.js",
-    "prd": "cross-env NODE_ENV=prd nodemon ./app.js"
+    "prd": "cross-env NODE_ENV=prd pm2 start pm2.conf.json"
   },
   "author": "jiang",
   "license": "ISC",
@@ -18,6 +18,7 @@
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
     "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.9.1",
     "multer": "^1.4.2",
     "mysql": "^2.17.1",
     "nodemon": "^2.0.2"
