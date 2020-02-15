@@ -43,36 +43,22 @@ router.get('/roleInfo', (req, res, next) => {
 const storage = multer.diskStorage({
   // 文件放置位置
   destination: function (req, file, cb) {
-    cb(null, `${UPLOAD_IMG_PATH}`)
+    const type = req.body.destination
+    if (!type) {
+      cb(null, `${UPLOAD_IMG_PATH}`)
+    } else {
+      cb(null, `${UPLOAD_IMG_PATH}/${type}`)
+    }
   },
   // 文件名字
   filename: function (req, file, cb) {
+    const type = req.body.destination
     const suffix = file.mimetype.split('/').pop()
-    cb(null, `img-${Date.now()}.${suffix}`)
-  }
-})
-// studio上传图片处理
-const StuioStorage = multer.diskStorage({
-  // 文件放置位置
-  destination: function (req, file, cb) {
-    cb(null, `${UPLOAD_IMG_PATH}/studioImg`)
-  },
-  // 文件名字
-  filename: function (req, file, cb) {
-    const suffix = file.mimetype.split('/').pop()
-    cb(null, `studioImg-${Date.now()}.${suffix}`)
-  }
-})
-// member上传图片处理
-const memberStorage = multer.diskStorage({
-  // 文件放置位置
-  destination: function (req, file, cb) {
-    cb(null, `${UPLOAD_IMG_PATH}/memberImg`)
-  },
-  // 文件名字
-  filename: function (req, file, cb) {
-    const suffix = file.mimetype.split('/').pop()
-    cb(null, `memberImg-${Date.now()}.${suffix}`)
+    if (!type) {
+      cb(null, `img-${Date.now()}.${suffix}`)
+    } else {
+      cb(null, `${type}-${Date.now()}.${suffix}`)
+    }
   }
 })
 
@@ -81,23 +67,7 @@ router.post(
   '/uploadImg',
   multer({ storage }).single('file'),
   (req, res, next) => {
-    res.json(new SuccessModel({fileName: req.file.filename}, 'success'))
-  }
-)
-// 上传瀑布流图片
-router.post(
-  '/uploadStudioImg',
-  multer({ storage: StuioStorage }).single('file'),
-  (req, res, next) => {
-    res.json(new SuccessModel({fileName: req.file.filename}, 'success'))
-  }
-)
-// 上传member图片
-router.post(
-  '/uploadMemberImg',
-  multer({ storage: memberStorage }).single('img'),
-  (req, res, next) => {
-    console.log(req.file)
+    console.log(req.body)
     res.json(new SuccessModel({fileName: req.file.filename}, 'success'))
   }
 )
