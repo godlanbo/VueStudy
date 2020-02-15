@@ -9,7 +9,9 @@ const jwtAuth = expressJwt({
     '/',
     '/api/login',
     '/api/home/getData',
-    '/api/timebase/getData'
+    '/api/timebase/getData',
+    '/api/join-us',
+    '/api/queryInfo'
   ]
 })
 
