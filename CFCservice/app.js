@@ -1,6 +1,9 @@
 const express = require('express')
 const router = require('./router')
+const path = require('path')
+const fs = require('fs')
 const bodyParser = require('body-parser')
+const logger = require('morgan')
 const cors = require('cors')
 // const boom = require('express-boom')
 // 创建 express 应用
@@ -8,6 +11,20 @@ const app = express()
 // 错误信息返回中间件，注册处理函数在res中
 // app.use(boom())
 // 注册解析post数据的中间件
+const ENV = process.env.NODE_ENV
+if (ENV !== 'prd') {
+  app.use(logger('dev', {
+    stream: process.stdout
+  }))
+} else {
+  const logFileName = path.join(__dirname, 'logs', 'access.log')
+  const writeStream = fs.createWriteStream(logFileName, {
+    flags: 'a'
+  })
+  app.use(logger('combined', {
+    stream: writeStream
+  }))
+}
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 // 解决跨域问题中间件
