@@ -121,10 +121,10 @@ export default {
   // height: 700px;
   min-height: 500px;
   // background-color: #322e23;
-  // background-image: url('http://localhost:8089/img/1.jpg');
-  // background-position: center;
-  // background-size: cover;
-  // background-repeat: no-repeat;
+  background-image: url('http://localhost:8089/img/back.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   // opacity: .4;
   background-color: white;
   overflow: hidden;
