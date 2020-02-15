@@ -4,7 +4,6 @@
       <div class="item-content-wrapper">
         <div class="item-title-wrapper">
           <div class="item-title">{{itemInfo.title}}</div>
-          <div class="item-title-fill"></div>
         </div>
         <div class="item-content-wrapper">
           <div class="item-content">
@@ -80,9 +79,6 @@ export default {
           font-size: 10vw;
           line-height: 10vw;
           font-family: "Google Sans Display",Arial,Helvetica,sans-serif;
-        }
-        .item-title-fill {
-          height: 380px;
         }
       }
       .item-content-wrapper {
