@@ -92,8 +92,9 @@
       <div class="content-right-wrapper">
         <div class="upload-wrapper">
           <el-upload
-            :action="activeStudio"
+            :action="active"
             :headers="header"
+            :data="studioUploadData"
             :file-list="studioFileList"
             :before-upload="beforeUpload"
             :on-success="onStudioSuccess"
@@ -139,14 +140,15 @@
               @click="toggleShow"
             >上传头像</el-button>
               <my-upload
-                field="img"
+                field="file"
                 @crop-success="cropSuccess"
                 @crop-upload-success="cropUploadSuccess"
                 @crop-upload-fail="cropUploadFail"
+                :params="memberUploadData"
                 v-model="show"
                 :width="300"
                 :height="300"
-                :url="activeMember"
+                :url="active"
                 :headers="header"
                 noSquare
                 img-format="png" />
@@ -209,8 +211,12 @@ export default {
   data() {
     return {
       active: `${process.env.VUE_APP_BASE_URL}/api/uploadImg`,
-      activeStudio: `${process.env.VUE_APP_BASE_URL}/api/uploadStudioImg`,
-      activeMember: `${process.env.VUE_APP_BASE_URL}/api/uploadMemberImg`,
+      studioUploadData: {
+        destination: 'studioImg'
+      },
+      memberUploadData: {
+        destination: 'memberImg'
+      },
       imgDataUrl: '',
       show: false,
       fileList: [],
