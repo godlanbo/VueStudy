@@ -55,6 +55,13 @@ const actions = {
       })
     })
   },
+  logout({ commit }) {
+    return new Promise(resolve => {
+      commit('SET_ROLE', '')
+      setToken('')
+      resolve()
+    })
+  },
   resetToken({ commit }) {
     return new Promise(resolve => {
       commit('SET_ROLE', '')
