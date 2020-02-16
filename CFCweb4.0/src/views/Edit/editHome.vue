@@ -374,14 +374,11 @@ export default {
         teamInfo: this.teamInfo.slice(0, -1)
       }
       updateHome(res).then(() => {
-        this.$emit('successUpdate')
+        this.$emit('success-update')
         this.fileList = []
         this.studioFileList = []
       }).catch(err => {
-        this.$message({
-          type: 'error',
-          message: err.message
-        })
+        this.$emit('error-upload', err)
       })
     },
     // 删除一个timebase板块
