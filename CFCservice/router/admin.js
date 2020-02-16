@@ -80,8 +80,8 @@ router.get('/removeImg', (req, res, next) => {
   let filePath
   if (type === 'img') {
     filePath = `${UPLOAD_IMG_PATH}/${file}`
-  } else if (type === 'studioImg') {
-    filePath = `${UPLOAD_IMG_PATH}/studioImg/${file}`
+  } else {
+    filePath = `${UPLOAD_IMG_PATH}/${type}/${file}`
   }
   
   // console.log(filePath)
@@ -160,6 +160,46 @@ router.post('/updateHome', async (req, res, next) => {
       }
     })
     res.json(new SuccessModel('成功提交首页的修改'))
+  } catch(err) {
+    res.json(new ErrorModel(err.message))
+  }
+})
+
+router.post('/updateTimebase', async (req, res, next) => {
+  try {
+    const newTimebaseInfo = req.body.timebaseInfo
+    const timebaseInfo = await getData('timebaseItem')
+    await replaceData(newTimebaseInfo, 'timebaseItem')
+
+    const newTimebaseImg = []
+    const timebaseImg = []
+
+    newTimebaseInfo.forEach(item => {
+      item.detailInfo.forEach(detailItem => {
+        if (detailItem.imgUrl) {
+          newTimebaseImg.push(detailItem.imgUrl.split('/').pop())
+        }
+      })
+    })
+    timebaseInfo.forEach(item => {
+      item.detailInfo.forEach(detailItem => {
+        if (detailItem.imgUrl) {
+          timebaseImg.push(detailItem.imgUrl.split('/').pop())
+        }
+      })
+    })
+    console.log('newImg', newTimebaseImg)
+    console.log('img', timebaseImg)
+    timebaseImg.forEach(item => {
+      if (!newTimebaseImg.includes(item)) {
+        const imgFilePath = `${UPLOAD_IMG_PATH}/timebaseImg/${item}`
+        if (fs.existsSync(imgFilePath)) {
+          fs.unlinkSync(imgFilePath)
+        }
+      }
+    })
+
+    res.json(new SuccessModel('成功提交时间轴的修改'))
   } catch(err) {
     res.json(new ErrorModel(err.message))
   }
