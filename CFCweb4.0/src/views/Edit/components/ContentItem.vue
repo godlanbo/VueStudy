@@ -4,17 +4,9 @@
       <div class="item-content-wrapper">
         <div class="item-title-wrapper">
           <div class="item-title">{{itemInfo.title}}</div>
-          <!-- <div style="height: 380px"></div> -->
         </div>
         <div class="item-content-wrapper">
           <div class="item-content">
-            <!-- <div v-for="(item, index) in itemInfo.detailInfo" :key="index" class="content-detail">
-              <div class="detail-title">{{item.title}}</div>
-              <div class="detail-content">
-                <img v-if="isHaveImg" :src="item.imgUrl">
-                {{item.content}}
-              </div>
-            </div> -->
             <el-timeline>
               <el-timeline-item
                 class="content-detail"
@@ -32,12 +24,14 @@
                     <div class="detail-item-tool">
                       <el-button
                         size="mini"
+                        v-waves
                         type="primary"
                         icon="el-icon-edit"
                         @click="handleClickEdit(index)"
                       >编 辑</el-button>
                       <el-button
                         size="mini"
+                        v-waves
                         type="danger"
                         icon="el-icon-delete"
                         @click="handleClickDelete(index)"
@@ -49,15 +43,34 @@
             </el-timeline>
           </div>
         </div>
-        <div class="item-bottom"></div>
+        <div class="item-bottom">
+          <div class="tool-wrapper">
+            <el-button
+              round
+              v-waves
+              type="success"
+              icon="el-icon-circle-plus-outline"
+              @click="handleClickAdd"
+            >新 增</el-button>
+            <el-button
+              round
+              v-waves
+              type="danger"
+              icon="el-icon-delete"
+              @click="handleClickDeleteAll"
+            >删 除</el-button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import waves from '@/components/waves/waves'
 export default {
   name: 'ContentItem',
-  components: {
+  directives: {
+    waves
   },
   props: {
     itemInfo: {
@@ -67,12 +80,16 @@ export default {
     itemIndex: Number
   },
   methods: {
+    handleClickAdd() {
+      this.$emit('add-detail', this.itemIndex, -1)
+    },
+    handleClickDeleteAll() {
+      this.$emit('delete-all', this.itemIndex)
+    },
     handleClickEdit(index) {
-      // console.log(index)
       this.$emit('edit-detail', this.itemIndex, index)
     },
     handleClickDelete(index) {
-      // console.log(index)
       this.$emit('delete-detail', this.itemIndex, index)
     },
     isHaveImg(item) {
@@ -148,7 +165,7 @@ export default {
             }
             .detail-item-tool {
               text-align: center;
-              margin-top: 10%;
+              margin-top: 5%;
             }
           }
         }
@@ -159,6 +176,10 @@ export default {
         height: 96px;
         width: 98%;
         margin: 0 1%;
+        .tool-wrapper {
+          float: right;
+          margin-top: 25px;
+        }
       }
     }
   }
