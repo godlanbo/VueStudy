@@ -49,3 +49,11 @@ export function updateHome(res) {
     data: res
   })
 }
+
+export function updateTimebase(res) {
+  return request({
+    url: '/updateTimebase',
+    method: 'post',
+    data: res
+  })
+}
