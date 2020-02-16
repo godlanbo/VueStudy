@@ -12,7 +12,8 @@
       :is="currentComponent"
       :shouldSave="shouldSave"
       @change="handleChange"
-      @successUpdate="onUpdateSuccess" />
+      @success-update="onUpdateSuccess"
+      @error-update="onUploadError" />
   </div>
 </template>
 <script>
@@ -39,10 +40,17 @@ export default {
     }
   },
   methods: {
+    onUploadError(err) {
+      this.$message({
+        type: 'error',
+        message: err.message
+      })
+    },
     handleChange() {
       this.shouldSave = true
     },
     onUpdateSuccess() {
+      this.shouldSave = false
       this.$notify({
         type: 'success',
         message: '提交修改成功',
@@ -50,7 +58,6 @@ export default {
       })
     },
     submitForm() {
-      this.shouldSave = false
       this.$refs.edit.update()
     }
   },
