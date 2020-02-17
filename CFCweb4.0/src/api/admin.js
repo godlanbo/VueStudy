@@ -32,6 +32,13 @@ export function getAdminHomeData() {
   })
 }
 
+export function getAdminTeamData() {
+  return request({
+    url: '/team/getTeamData',
+    method: 'get'
+  })
+}
+
 export function removeImg({ fileName }) {
   return request({
     url: '/removeImg',
