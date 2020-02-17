@@ -4,6 +4,7 @@ const router = express.Router()
 const homeRouter = require('../router/home')
 const timebaseRouter = require('../router/timebase')
 const adminRouter = require('../router/admin')
+const taemRouter = require('../router/team')
 const { jwtAuth } = require('../utils/jwt')
 const { ErrorModel, SuccessModel } = require('../model/resModel')
 const { insertData, queryData } = require('../utils/data')
@@ -12,6 +13,7 @@ router.use(jwtAuth)
 
 router.use('/api/home', homeRouter)
 router.use('/api/timebase', timebaseRouter)
+router.use('/api/team', taemRouter)
 router.use('/api', adminRouter)
 
 router.post('/api/join-us', (req, res, next) => {
