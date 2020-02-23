@@ -205,4 +205,15 @@ router.post('/updateTimebase', async (req, res, next) => {
   }
 })
 
+router.post('/updateTeam', async (req, res, next) => {
+  try {
+    const teamInfo = req.body.teamInfo
+    await replaceData(teamInfo, 'team')
+
+    res.json(new SuccessModel('成功提交团队信息的修改'))
+  } catch(err) {
+    res.json(new ErrorModel(err.message))
+  }
+})
+
 module.exports = router
