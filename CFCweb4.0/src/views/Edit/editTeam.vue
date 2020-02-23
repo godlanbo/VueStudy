@@ -2,7 +2,7 @@
   <div class="editTeam-container">
     <div class="table-wrapper">
       <el-table
-        :data="teamInfo"
+        :data="tableInfo"
         stripe
         height="490"
       >
@@ -29,13 +29,12 @@
           <template v-slot:header>
             <el-input
               v-model="search"
-              style="width: 70%"
               placeholder="输入关键字搜索"/>
-            <el-button
+            <!-- <el-button
               type="primary"
               style="margin-left: 10px"
               @click="handleSearchInfo"
-            >搜索</el-button>
+            >搜索</el-button> -->
           </template>
           <template v-slot="scope">
             <el-button
@@ -100,7 +99,7 @@
   </div>
 </template>
 <script>
-import { getAdminTeamData } from '@/api/admin'
+import { getAdminTeamData, updateTeam } from '@/api/admin'
 export default {
   name: 'EditTeam',
   data() {
@@ -108,6 +107,8 @@ export default {
       search: '',
       editDialogVisiable: false,
       teamInfo: [],
+      tableInfo: [],
+      searchIndexMap: [],
       rules: {
         name: { required: true, message: '请输入姓名', trigger: 'blur' },
         workCompany: { required: true, message: '请输入工作单位', trigger: 'blur' },
@@ -135,17 +136,41 @@ export default {
         }
       },
       deep: true
+    },
+    search: {
+      handler(newValue) {
+        this.searchIndexMap = []
+        if (!newValue) {
+          this.tableInfo = this.teamInfo
+        } else {
+          this.tableInfo = this.getTableData()
+        }
+      },
+      immediate: true
     }
   },
   methods: {
     update() {
-
+      const res = {
+        teamInfo: this.teamInfo
+      }
+      updateTeam(res).then(() => {
+        this.$emit('success-update')
+      }).catch(err => {
+        this.$emit('error-update', err)
+      })
     },
     getTableData() {
       if (!this.search) {
         return this.teamInfo
       } else {
-        //
+        let tableData = this.teamInfo.filter((item, index) => {
+          if (item.name.includes(this.search) || item.workCompany.includes(this.search) || item.workCity.includes(this.search)) {
+            this.searchIndexMap.push(index)
+            return true
+          }
+        })
+        return tableData
       }
     },
     handleDialogOpen() {
@@ -161,22 +186,28 @@ export default {
           } else {
             this.teamInfo.push(this.postForm)
           }
+          this.tableInfo = this.getTableData()
           this.editDialogVisiable = false
         } else {
           return false
         }
       })
     },
-    handleSearchInfo() {
-
-    },
     handleAdditem() {
-      this.postForm = {}
+      this.postForm = {
+        name: '',
+        workCompany: '',
+        workCity: ''
+      }
       this.editIndex = -1
       this.editDialogVisiable = true
     },
     handleEdit(index, row) {
-      this.editIndex = index
+      if (this.searchIndexMap.length === 0) {
+        this.editIndex = index
+      } else {
+        this.editIndex = this.searchIndexMap[index]
+      }
       this.postForm = Object.assign({}, row)
       this.editDialogVisiable = true
     },
@@ -186,15 +217,19 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.teamInfo.splice(index, 1)
+        let delIndex = this.searchIndexMap.length === 0 ? index : this.searchIndexMap[index]
+        this.teamInfo.splice(delIndex, 1)
+        this.tableInfo = this.getTableData()
         this.$message({
           type: 'success',
           message: '已成功删除'
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          })
+        })
+      }).catch(() => {
+        let delIndex = this.searchIndexMap.length === 0 ? index : this.searchIndexMap[index]
+        console.log(delIndex)
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
         })
       })
     },
@@ -214,6 +249,7 @@ export default {
     getAdminTeamData().then(response => {
       const data = response.data.data
       this.teamInfo = data.teamInfo
+      this.tableInfo = this.teamInfo
     }).catch(err => {
       this.$message({
         type: 'error',
