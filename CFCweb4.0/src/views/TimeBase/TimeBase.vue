@@ -4,7 +4,7 @@
       <div class="content-title">我们在这里相知相识，故事从未停止</div>
     </div>
     <div class="transition-img-wrapper">
-      <img src="http://localhost:8089/img/1.JPG">
+      <img src="/images/timebase.jpg">
     </div>
     <div class="timebase-content-wrapper">
       <timebase-item
