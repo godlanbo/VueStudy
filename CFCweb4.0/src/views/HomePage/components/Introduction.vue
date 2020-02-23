@@ -121,7 +121,7 @@ export default {
   // height: 700px;
   min-height: 500px;
   // background-color: #322e23;
-  background-image: url('http://localhost:8089/img/back.jpg');
+  background-image: url(/images/back.png);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -138,7 +138,7 @@ export default {
     left: 0;
   }
   .detail-body {
-    height: 610px;
+    height: 620px;
     // background-color: #ffffff;
     text-align: center;
     top: 0;
