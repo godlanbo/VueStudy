@@ -64,3 +64,11 @@ export function updateTimebase(res) {
     data: res
   })
 }
+
+export function updateTeam(res) {
+  return request({
+    url: '/updateTeam',
+    method: 'post',
+    data: res
+  })
+}
