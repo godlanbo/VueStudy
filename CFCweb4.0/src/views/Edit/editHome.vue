@@ -378,7 +378,7 @@ export default {
         this.fileList = []
         this.studioFileList = []
       }).catch(err => {
-        this.$emit('error-upload', err)
+        this.$emit('error-update', err)
       })
     },
     // 删除一个timebase板块

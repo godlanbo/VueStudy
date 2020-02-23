@@ -182,7 +182,7 @@ export default {
       updateTimebase(res).then(() => {
         this.$emit('success-update')
       }).catch(err => {
-        this.$emit('error-upload', err)
+        this.$emit('error-update', err)
       })
     },
     handleAddItem(addIndex) {
