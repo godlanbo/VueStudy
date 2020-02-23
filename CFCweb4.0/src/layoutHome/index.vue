@@ -8,7 +8,7 @@
     </transition>
     <div class="footer-wrapper">
       <div class="logo">
-        <img src="@/assets/logo1.png"> 
+        <img src="@/assets/logo.png">
       </div>
       <div class="copyrigth-wrapper">
         <div class="author">
