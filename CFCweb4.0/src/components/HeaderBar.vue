@@ -1,10 +1,8 @@
 <template>
   <header class="site-header">
     <div class="head-left">
-      <!-- <abbr data-title="Crazy For Code">CFC</abbr> -->
-      <!-- <img src="@/assets/logo1.png" style="height: 60px; width: 200px;"> -->
       <div class="shake-wrapper">
-        <div class="shake-logo">CrazyForCode</div>
+        CrazyForCode
       </div>
     </div>
     <el-menu
@@ -66,12 +64,13 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 @import url(https://fonts.googleapis.com/css?family=Lato);
 @import url(https://fonts.googleapis.com/css?family=Seymour+One&display=swap);
 .site-header {
   top: 0;
   display: flex;
+  justify-content: flex-start;
   height: 60px;
   width: 100%;
   position: fixed;
@@ -82,21 +81,13 @@ export default {
   /* border-bottom: 1px solid #dfdede; */
   /* background-color: #24292e; */
   background-color: white;
-  backdrop-filter: blur(30px);
-}
-.site-header:hover {
-  /* box-shadow: 0 0.7px 1px rgba(0, 0, 0, 0.157),
-    0 1.7px 2.6px rgba(0, 0, 0, 0.224); */
-  /* box-shadow: 0 2px 12px 0 rgba(0,0,0,.1); */
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 15px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 15px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+  }
 }
 .head-left {
   line-height: 60px;
-  width: 23%;
-}
-.head-right-menu {
-  margin-left: 40%;
-  /* height: 100%; */
+   flex-grow: 1;
 }
 .head-right-menu .menu-item {
   font-family: 'Seymour One', sans-serif;
@@ -104,11 +95,7 @@ export default {
   line-height: 1.5;
   padding-top: 18px;
   font-weight: 500;
-  /* font-weight: bold; */
 }
-/* .head-right-menu .menu-item:hover {
-  color: #aeb3b8 !important;
-} */
 .head-right-menu .menu-item a{
   text-decoration: none;
   vertical-align: inherit;
@@ -119,85 +106,43 @@ export default {
 @keyframes shake {
   10% {
     transform:translate(-0.5px,1.5px) rotate(0.5deg);
-    /* border-color:#ffbebe; */
     border-color: #4285f4;
   }
   20% {
     transform:translate(-0.5px,1.5px) rotate(-0.5deg);
-    /* border-color:#ffdebe; */
     border-color: #ea4335;
   }
   30% {
     transform:translate(-2.5px,-1.5px) rotate(0.5deg);
-    /* border-color:#fff3be; */
     border-color: #f9ab00;
   }
   40% {
     transform:translate(-2.5px,-2.5px) rotate(-1.5deg);
-    /* border-color:#eeffbe; */
     border-color: #34a853;
   }
   50% {
     transform:translate(1.5px,1.5px) rotate(-1.5deg);
-    /* border-color:#f3ffbe; */
     border-color: #4285f4;
   }
   60% {
     transform:translate(-2.5px,-0.5px) rotate(-0.5deg);
-    /* border-color:#e9ffbe; */
     border-color: #ea4335;
   }
   70% {
     transform:translate(1.5px,-2.5px) rotate(-0.5deg);
-    /* border-color:#d0ffbe; */
     border-color: #f9ab00;
   }
   80% {
     transform:translate(0.5px,1.5px) rotate(0.5deg);
-    /* border-color:#beffde; */
     border-color: #34a853;
   }
   90% {
     transform:translate(-2.5px,-0.5px) rotate(0.5deg);
-    /* border-color:#beefff; */
     border-color: #4285f4;
   }
   100% {
     transform:translate(-0.5px,-0.5px) rotate(-1.5deg);
-    /* border-color:#bed8ff; */
     border-color: #ea4335;
-  }
-}
-@keyframes shakeText {
-  10% {
-    color:#ff9292;
-  }
-  20% {
-    color:#f09eff;
-  }
-  30% {
-    color:#9397ff;
-  }
-  40% {
-    color:#9fb8ff;
-  }
-  50% {
-    color:#9fd7ff;
-  }
-  60% {
-    color:#9fffd2;
-  }
-  70% {
-    color:#dfff9f;
-  }
-  80% {
-    color:#ffd49f;
-  }
-  90% {
-    color:#ffc29f;
-  }
-  100% {
-    color:#ffa198;
   }
 }
 @keyframes shakeBorder {
@@ -232,7 +177,7 @@ export default {
     border-color:#ffa198;
   }
 }
-@keyframes test {
+@keyframes shakeText {
   25% {
     color: #4285f4;
   }
@@ -246,44 +191,24 @@ export default {
     color: #34a853;
   }
 }
-@keyframes testBorder {
-  25% {
-    border-color: #4285f4;
-  }
-  50% {
-    border-color: #ea4335;
-  }
-  75% {
-    border-color: #f9ab00;
-  }
-  100% {
-    border-color: #34a853;
-  }
+.shake-wrapper:hover {
+  animation: shake 0.3s linear infinite,shakeText 1s linear infinite;
 }
 .shake-wrapper {
-  margin-left: 30px;
-}
-.shake-wrapper .shake-logo:hover {
-  animation: shake 0.3s linear infinite,test 1s linear infinite;
-}
-.shake-wrapper .shake-logo {
   color: #000;
-  /* color: #fff; */
   font-size: 16px;
   font-weight: 500;
   font-family: 'Seymour One', sans-serif;
-  width: 55%;
+  display: inline-table;
+  margin-left: 30px;
   height: 36px;
   line-height: 36px;
   border: 2px solid #000;
-  /* border: 2px solid #fff; */
   padding: 0px 10px;
-  padding-left: 7px;
   margin-top: 10px;
   border-radius: 5px;
   cursor: pointer;
-  /* animation: shakeBorder 20s linear infinite; */
-  animation: testBorder 20s linear infinite;
+  animation: shakeBorder 20s linear infinite;
 }
 abbr span {
   text-decoration: underline #322e23;
