@@ -274,6 +274,7 @@ export default {
     beforeUpload(file) {
       // this.uploadData.activeIndex = this.activeIndex
       const fileType = file.type
+      const fileSize = file.size
       if (!getToken()) {
         getRole().then(() => {}).catch(() => {})
         return false
@@ -282,6 +283,13 @@ export default {
         this.$message({
           type: 'warning',
           message: '请上传png或者jp(e)g格式的图片'
+        })
+        return false
+      }
+      if (fileSize / 1024 /1024 > 6) {
+        this.$message({
+          type: 'warning',
+          message: '图片过大，请手动压缩后上传'
         })
         return false
       }
