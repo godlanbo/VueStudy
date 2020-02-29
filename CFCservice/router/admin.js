@@ -9,6 +9,8 @@ const { SALT_VALUE, PRIVATE_KEY, JWT_EXPIRED, UPLOAD_IMG_PATH } = require('../ut
 const { login } = require('../services/admin')
 const { getData, replaceData } = require('../utils/data')
 const jwt = require('jsonwebtoken')
+const compressImg = require('../utils/compression')
+const path = require('path')
 
 
 router.post('/login', (req, res, next) => {
@@ -67,7 +69,7 @@ router.post(
   '/uploadImg',
   multer({ storage }).single('file'),
   (req, res, next) => {
-    console.log(req.body)
+    compressImg(req.file.path.replace(/\\/g, '/'), req.file.destination)
     res.json(new SuccessModel({fileName: req.file.filename}, 'success'))
   }
 )
