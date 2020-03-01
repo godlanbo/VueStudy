@@ -68,8 +68,8 @@ const storage = multer.diskStorage({
 router.post(
   '/uploadImg',
   multer({ storage }).single('file'),
-  (req, res, next) => {
-    compressImg(req.file.path.replace(/\\/g, '/'), req.file.destination)
+  async (req, res, next) => {
+    await compressImg(req.file.path.replace(/\\/g, '/'), req.file.destination)
     res.json(new SuccessModel({fileName: req.file.filename}, 'success'))
   }
 )
@@ -190,8 +190,6 @@ router.post('/updateTimebase', async (req, res, next) => {
         }
       })
     })
-    console.log('newImg', newTimebaseImg)
-    console.log('img', timebaseImg)
     timebaseImg.forEach(item => {
       if (!newTimebaseImg.includes(item)) {
         const imgFilePath = `${UPLOAD_IMG_PATH}/timebaseImg/${item}`
