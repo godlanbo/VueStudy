@@ -452,7 +452,7 @@ export default {
       }
       this.$message({
         type: 'error',
-        message: err.message.message
+        message: err || ( err && err.message && err.message.message )
       })
     },
     onStudioRemove(file) {
