@@ -2,6 +2,7 @@ const express = require('express')
 const router = require('./router')
 const path = require('path')
 const fs = require('fs')
+const https = require('https')
 const bodyParser = require('body-parser')
 const logger = require('morgan')
 const cors = require('cors')
@@ -25,6 +26,12 @@ if (ENV !== 'prd') {
     stream: writeStream
   }))
 }
+// 创建https服务
+const privateKey = fs.readFileSync('https/private.key', 'utf8')
+const certificate = fs.readFileSync('https/full_chain.pem', 'utf8')
+const credentials = { key: privateKey, cert: certificate }
+const httpsServer = https.createServer(credentials, app)
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 // 解决跨域问题中间件
@@ -41,3 +48,6 @@ const server = app.listen(8000, function() {
   const { address, port } = server.address()
   console.log('Http Server is running on http://%s:%s', address, port)
 })
+// httpsServer.listen(8000, function() {
+//   console.log('success Https server is runnig on port 8000')
+// })
